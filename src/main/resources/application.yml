@@ -1,4 +1,30 @@
 server:
   port: 8090
 
+spring:
+  application:
+    name: authority
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/authority?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: Root@5683
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.mapper
+  type-aliases-package: top.lzmvlog.authority.model
+
+logging:
+  level:
+    top.lzmvlog.authority.dao: debug
+  file:
+    path: ./log/
+
+signingKey: authority
+
+
+
+
 
