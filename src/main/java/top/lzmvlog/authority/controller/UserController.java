@@ -1,23 +1,42 @@
 package top.lzmvlog.authority.controller;
 
+import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.impl.UserServiceImpl;
+import top.lzmvlog.authority.util.data.Response;
 
 /**
  * @author ShaoJie
- * @Date 2020年05月12 10:41
- * @Description:
+ * @Date 2020年06月03 21:05
+ * @Description: 用户管理
  */
 @RestController
 @RequestMapping("user")
 public class UserController {
 
     /**
-     * 用户业务逻辑层
+     * 用户的业务逻辑层
      */
     @Autowired
     public UserServiceImpl userService;
+
+    /**
+     * 注册
+     *
+     * @param user 用户的信息
+     * @return
+     */
+    @GetMapping("registered")
+    public Response registered(@RequestBody User user) {
+        if (user == null)
+            throw new RuntimeException("用户不能为空");
+        userService.insert(user);
+        return new Response(HttpStatus.HTTP_OK, "注册成功");
+    }
 
 }

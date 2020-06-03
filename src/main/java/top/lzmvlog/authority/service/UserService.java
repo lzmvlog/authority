@@ -1,5 +1,7 @@
 package top.lzmvlog.authority.service;
 
+import top.lzmvlog.authority.model.User;
+
 /**
  * @author ShaoJie
  * @Date 2020年05月12 10:20
@@ -7,4 +9,13 @@ package top.lzmvlog.authority.service;
  */
 public interface UserService {
 
+    /**
+     * 插入用户信息
+     *
+     * @param user 用户信息
+     * @return
+     */
+    Integer insert(User user);
+
+    String selectUser(User user);
 }

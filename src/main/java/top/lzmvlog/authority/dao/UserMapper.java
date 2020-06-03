@@ -1,6 +1,8 @@
 package top.lzmvlog.authority.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import top.lzmvlog.authority.model.User;
 
 /**
  * @author ShaoJie
@@ -8,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Description:
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 }

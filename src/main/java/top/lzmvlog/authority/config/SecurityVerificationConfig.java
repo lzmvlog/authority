@@ -1,9 +1,12 @@
 package top.lzmvlog.authority.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author ShaoJie
@@ -11,7 +14,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @Description: 安全验证配置
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityVerificationConfig extends WebSecurityConfigurerAdapter {
+
+    /**
+     * 密码加密
+     *
+     * @return
+     */
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     /**
      * 构建用户验证的配置
@@ -21,7 +35,7 @@ public class SecurityVerificationConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+//        auth.authenticationProvider()
     }
 
     /**
@@ -32,7 +46,11 @@ public class SecurityVerificationConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http
+                .authorizeRequests()
+                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/user/registered").permitAll()
+                .anyRequest().authenticated();
     }
 
 }
