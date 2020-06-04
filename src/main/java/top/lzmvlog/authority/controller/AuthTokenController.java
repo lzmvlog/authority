@@ -2,7 +2,7 @@ package top.lzmvlog.authority.controller;
 
 import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
@@ -23,8 +23,9 @@ public class AuthTokenController {
     @Autowired
     public UserServiceImpl userService;
 
-    @PostMapping("oauth/token")
+    @GetMapping("oauth/token")
     public Response getToken(@RequestBody User user) {
+        userService.loadUserByUsername(user.getName());
         return new Response(HttpStatus.HTTP_OK, "登录成功", userService.selectUser(user));
     }
 

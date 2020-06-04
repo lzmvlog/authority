@@ -1,5 +1,6 @@
 package top.lzmvlog.authority.model;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -46,7 +47,7 @@ public class User implements Serializable {
     /**
      * 是否启用账号
      */
-    @TableField("enable")
+    @TableField(value = "isEnable",fill = FieldFill.INSERT_UPDATE, update = "true",condition = "%s = true")
     private boolean enable;
 
 }
