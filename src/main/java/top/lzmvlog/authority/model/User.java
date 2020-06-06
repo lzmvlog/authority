@@ -46,8 +46,11 @@ public class User implements Serializable {
 
     /**
      * 是否启用账号
+     * <p>
+     * condition = "%s = true" 是 @TableField 注解的其中一个属性
+     * 可以给当前的的查询字段加上一个字段 例如：isEnable = true 的默认条件值
      */
-    @TableField(value = "isEnable",fill = FieldFill.INSERT_UPDATE, update = "true",condition = "%s = true")
+    @TableField(value = "isEnable", fill = FieldFill.INSERT_UPDATE, update = "true", condition = "%s = true")
     private boolean enable;
 
 }

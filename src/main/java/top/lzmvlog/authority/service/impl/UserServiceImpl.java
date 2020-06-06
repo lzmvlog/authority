@@ -1,13 +1,10 @@
 package top.lzmvlog.authority.service.impl;
 
-import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +21,10 @@ import top.lzmvlog.authority.util.jwt.JwtUtil;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     /**
      * 密码加密
-     *
-     * @return
      */
     @Autowired
     public BCryptPasswordEncoder passwordEncoder;
@@ -57,8 +52,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Integer insert(User user) {
         log.info("user:{}", user.toString());
         return userMapper.insert(new User()
-                .setId(String.valueOf(UUID.fastUUID()))
+                .setId(IdUtil.fastSimpleUUID())
                 .setName(user.getName())
+                // encode() 对明文密码加密
                 .setPassword(passwordEncoder.encode(user.getPassword()))
                 .setEnable(true));
     }
@@ -71,27 +67,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @throws TokenException 登录失败 / 分发 token 失败
      */
     public String selectUser(User user) throws TokenException {
-        User userInfo = userMapper.selectOne(Wrappers.query(user));
-        if (userInfo == null)
+        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(user.getName())));
+        // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
+        if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误");
         return jwtUtil.createToken(user.getName());
     }
 
-    /**
-     * 登录 根据用户名查询用户的信息
-     *
-     * @param userName
-     * @return
-     * @throws UsernameNotFoundException
-     */
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userMapper.selectOneByName(Wrappers.query(new User().setName(userName)));
-//        List<GrantedAuthority> authorityList = getUserAuthority(user.getId());
-        if (user == null)
-            throw new UsernameNotFoundException("用户不存在");
-//        return new org.springframework.security.core.userdetails.User(user.getName(),
-//                passwordEncoder.encode(user.getPassword()), authorityList);;
-        return null;
-    }
 }

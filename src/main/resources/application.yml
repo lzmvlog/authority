@@ -28,8 +28,3 @@ logging:
 auth:
   token:
     signingKey: YXV0aG9yaXR5
-
-
-
-
-

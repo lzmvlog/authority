@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.dao;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import top.lzmvlog.authority.model.User;
@@ -12,5 +11,5 @@ import top.lzmvlog.authority.model.User;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    User selectOneByName(QueryWrapper<User> query);
+
 }
