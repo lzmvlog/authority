@@ -14,10 +14,12 @@ import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.jwt.JwtUtil;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author ShaoJie
  * @Date 2020年05月12 10:20
- * @Description:
+ * @Description: User 业务逻辑
  */
 @Service
 @Slf4j
@@ -63,7 +65,7 @@ public class UserServiceImpl implements UserService {
      * 查询用户信息
      *
      * @param user 用户信息
-     * @return
+     * @return 用户的 token
      * @throws TokenException 登录失败 / 分发 token 失败
      */
     public String selectUser(User user) throws TokenException {
@@ -72,6 +74,48 @@ public class UserServiceImpl implements UserService {
         if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误");
         return jwtUtil.createToken(user.getName());
+    }
+
+    /**
+     * 查询用户信息
+     *
+     * @param name 用户名称
+     * @return 用户的 token
+     * @throws TokenException 登录失败 / 分发 token 失败
+     */
+    @Override
+    public User loadUserByUsername(@NotNull String name) throws TokenException {
+        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(name)));
+        // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
+        if (userInfo == null)
+            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST,"没有当前账号信息");
+
+        return userInfo;
+    }
+
+    /**
+     * 查询用户信息
+     *
+     * @param account 用户账号
+     * @return 用户的基本信息
+     */
+    @Override
+    public User selectUserInfo(String account) {
+        return userMapper.selectOne(Wrappers.query(new User().setName(account)));
+    }
+
+    /**
+     * 查询是否存在当前的用户
+     *
+     * @param account 用户账号
+     * @return 当前的用户是否存在
+     */
+    @Override
+    public boolean getUser(String account) {
+        Integer count = userMapper.selectCount(Wrappers.query(new User().setName(account)));
+        if (count == 0)
+            return false;
+        return true;
     }
 
 }

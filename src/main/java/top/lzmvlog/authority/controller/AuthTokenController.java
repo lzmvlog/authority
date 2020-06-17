@@ -2,7 +2,7 @@ package top.lzmvlog.authority.controller;
 
 import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import top.lzmvlog.authority.util.data.Response;
  * @Description: 资源权限 管理
  */
 @RestController
-@RequestMapping("oauth")
+@RequestMapping("auth")
 public class AuthTokenController {
 
     /**
@@ -31,7 +31,7 @@ public class AuthTokenController {
      * @param user 用户信息
      * @return
      */
-    @GetMapping("token")
+    @PostMapping("/token")
     public Response getToken(@RequestBody User user) {
         return new Response(HttpStatus.HTTP_OK, "登录成功", userService.selectUser(user));
     }
