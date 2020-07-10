@@ -29,7 +29,6 @@ public class Response {
      */
     private Object data;
 
-
     /**
      * 响应成功应返回 响应码 - 响应信息 - 响应数据
      *
@@ -61,7 +60,6 @@ public class Response {
      * @param data 响应数据
      */
     public Response(Integer code, Object data) {
-        this.code = code;
         this.data = data;
     }
 }

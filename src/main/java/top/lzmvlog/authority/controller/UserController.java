@@ -29,7 +29,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/registered")
-    public Response registered(@RequestBody User user) {
+    public Response registered(User user) {
         if (user == null)
             throw new RuntimeException("用户不能为空");
         userService.insert(user);
@@ -44,7 +44,7 @@ public class UserController {
      */
     @PostMapping("/getInfo")
     public Response getUserInfo(String account) {
-        return new Response(HttpStatus.HTTP_OK,userService.selectUserInfo(account));
+        return new Response(HttpStatus.HTTP_OK, userService.selectUserInfo(account));
     }
 
 }

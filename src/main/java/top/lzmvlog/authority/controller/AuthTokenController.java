@@ -3,7 +3,6 @@ package top.lzmvlog.authority.controller;
 import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
@@ -32,7 +31,7 @@ public class AuthTokenController {
      * @return
      */
     @PostMapping("/token")
-    public Response getToken(@RequestBody User user) {
+    public Response getToken(User user) {
         return new Response(HttpStatus.HTTP_OK, "登录成功", userService.selectUser(user));
     }
 
