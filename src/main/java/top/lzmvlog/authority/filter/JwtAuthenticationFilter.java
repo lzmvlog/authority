@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import top.lzmvlog.authority.config.TokenProvider;
 import top.lzmvlog.authority.exception.TokenException;
-import top.lzmvlog.authority.service.impl.UserServiceImpl;
+import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.jwt.JwtUtil;
 
 import javax.servlet.FilterChain;
@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * 用户的业务逻辑层
      */
     @Autowired
-    public UserServiceImpl userService;
+    public UserService userService;
 
     @Autowired
     public JwtUtil jwtUtil;
@@ -46,25 +46,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if ("/auth/token".equals(httpServletRequest.getRequestURI()) || "/user/registered".equals(httpServletRequest.getRequestURI())) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        }else {
+        if (!"/auth/token".equals(httpServletRequest.getRequestURI()) && !"/user/registered".equals(httpServletRequest.getRequestURI())) {
             String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
             if (token == null)
                 throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "缺少验证信息");
-            log.info("校验的 token：{}", token);
-            String account = jwtUtil.parseToken(token);
-            log.info("token 解析到的用户账号：{}", account);
-            if (account == null)
-                throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "不存在当前的用户");
-            log.info("account:{}", account);
-            boolean isPresence = userService.getUser(account);
-            if (!isPresence)
-                throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 出错");
+//            log.info("校验的 token：{}", token);
+//            String account = jwtUtil.parseToken(token);
+//            log.info("token 解析到的用户账号：{}", account);
+//            if (account == null)
+//                throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "不存在当前的用户");
+//            boolean isPresence = userService.getUser(account);
+//            if (!isPresence)
+//                throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 出错");
 
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
 }

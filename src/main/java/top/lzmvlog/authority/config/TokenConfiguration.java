@@ -10,14 +10,14 @@ import top.lzmvlog.authority.filter.JwtAuthenticationFilter;
 /**
  * @author ShaoJie
  * @Date 2020年06月09 13:34
- * @Description:
+ * @Description: 适配器
  */
 @Configuration
 public class TokenConfiguration extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private final TokenProvider tokenProvider;
 
-    public TokenConfiguration(TokenProvider tokenProvider){
+    public TokenConfiguration(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 

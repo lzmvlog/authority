@@ -30,15 +30,16 @@ public class JwtUtil {
     /**
      * 创建生成 token
      *
-     * @return
+     * @return String 生成的 token
      */
     public String createToken(String account) {
         log.info("账号：{} 登录成功", account);
         return Jwts.builder()
                 // 设置唯一的 ida
                 .setId(IdUtil.simpleUUID())
-                // 设置主题
+                // 设置主要包含的信息
                 .setSubject(account)
+                .claim("auth", "admin")
                 // 设置过期时间
                 .setExpiration(new DateUtil().getNowDateOneTime())
                 // 设置 token 签发的时间
@@ -53,11 +54,12 @@ public class JwtUtil {
      * 解析当前的 token
      *
      * @param token token 信息
-     * @return
+     * @return String token种解析到的信息
      */
     public String parseToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody();
-        if (claims.equals(null))
+        log.info("claims:{}", claims.toString());
+        if (claims.size() == 0)
             throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 信息错误 重新授权");
         return claims.getSubject();
     }

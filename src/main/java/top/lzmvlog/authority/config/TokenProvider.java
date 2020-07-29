@@ -37,16 +37,18 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
         Object t = claims.get(AUTHORITIES_KEY);
+        log.info("t:{}",t);
         String auth = "";
         if (Objects.nonNull(t)) {
             auth = t.toString();
         }
+
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(auth.split(","))
                         .filter(StringUtils::isNotBlank)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "12345", authorities);
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 

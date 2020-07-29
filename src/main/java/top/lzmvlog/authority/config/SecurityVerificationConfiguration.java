@@ -44,6 +44,9 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     @Autowired
     public JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    /**
+     * toekn 配置
+     */
     @Autowired
     public TokenConfiguration tokenConfiguration;
 
@@ -68,17 +71,23 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                // 授权地址不需要验证
                 .antMatchers("/auth/token").permitAll()
+                // 用户注册地址
                 .antMatchers("/user/registered").permitAll()
+                // 其余的都需要校验
                 .anyRequest().authenticated()
                 .and()
 //                .addFilter(jwtAuthenticationFilter)
+                // 添加后置处理拦截器
                 .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
+                // 访问拒绝处理程序
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .apply(tokenConfiguration)
                 .and()
+                // 取消 session 的状态
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
