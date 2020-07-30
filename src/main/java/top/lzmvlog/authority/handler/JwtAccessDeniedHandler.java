@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author ShaoJie
  * @Date 2020年06月08 20:52
- * @Description: 权限不足时提示
+ * @Description: 权限不足时处理器
  */
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {

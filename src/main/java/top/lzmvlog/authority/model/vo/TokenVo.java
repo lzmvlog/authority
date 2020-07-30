@@ -6,4 +6,6 @@ package top.lzmvlog.authority.model.vo;
  * @Description: 返回的 token 信息
  */
 public class TokenVo {
+
+
 }

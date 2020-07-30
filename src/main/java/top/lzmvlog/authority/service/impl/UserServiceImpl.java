@@ -2,19 +2,22 @@ package top.lzmvlog.authority.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpStatus;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.lzmvlog.authority.dao.UserMapper;
+import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.jwt.JwtUtil;
 
-import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 
 /**
  * @author ShaoJie
@@ -29,13 +32,13 @@ public class UserServiceImpl implements UserService {
      * 密码加密
      */
     @Autowired
-    public BCryptPasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder passwordEncoder;
 
     /**
      * 用户 接口
      */
     @Autowired
-    public UserMapper userMapper;
+    UserMapper userMapper;
 
     /**
      * 签发 token 的工具类
@@ -53,12 +56,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Integer insert(User user) {
         log.info("user:{}", user.toString());
-        return userMapper.insert(new User()
-                .setId(IdUtil.fastSimpleUUID())
-                .setName(user.getName())
+        user.setId(IdUtil.fastSimpleUUID())
                 // encode() 对明文密码加密
                 .setPassword(passwordEncoder.encode(user.getPassword()))
-                .setEnable(true));
+                .setEnable(true);
+        return userMapper.insert(user);
     }
 
     /**
@@ -68,29 +70,36 @@ public class UserServiceImpl implements UserService {
      * @return 用户的 token
      * @throws TokenException 登录失败 / 分发 token 失败
      */
-    public String selectUser(User user) throws TokenException {
-        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(user.getName())));
+    @Override
+    public String selectUser(User user) {
+        User userInfo = userMapper.selectOne(Wrappers.query(user).eq("name", user.getName()));
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
-            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误");
-        return jwtUtil.createToken(user.getName());
+            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误，填写正确的账号密码");
+
+        // 获取权限 map
+
+
+        return jwtUtil.createToken(user.getName(), new HashMap<>());
     }
 
     /**
      * 查询用户信息
      *
-     * @param name 用户名称
+     *
+     * @param userPage
+     * @param user 用户名称
      * @return 用户的 token
      * @throws TokenException 登录失败 / 分发 token 失败
      */
     @Override
-    public User loadUserByUsername(@NotNull String name) throws TokenException {
-        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(name)));
+    public IPage<User> loadUserByUser(Page<User> userPage, User user) {
+        IPage<User> users = userMapper.selectPage(userPage, Wrappers.query(user).eq("name", user.getName()));
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
-        if (userInfo == null)
-            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST,"没有当前账号信息");
+        if (users == null)
+            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "没有当前账号信息");
 
-        return userInfo;
+        return users;
     }
 
     /**
@@ -101,7 +110,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User selectUserInfo(String account) {
-        return userMapper.selectOne(Wrappers.query(new User().setName(account)));
+        User user = userMapper.selectOne(Wrappers.query(new User().setName(account)));
+        if (user == null)
+            throw new ServiceException(HttpStatus.HTTP_INTERNAL_ERROR, "当前用户信息不存在");
+
+        return user;
     }
 
     /**
@@ -115,6 +128,7 @@ public class UserServiceImpl implements UserService {
         Integer count = userMapper.selectCount(Wrappers.query(new User().setName(account)));
         if (count == 0)
             return false;
+
         return true;
     }
 

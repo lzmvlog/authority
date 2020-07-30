@@ -1,5 +1,7 @@
 package top.lzmvlog.authority.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.lzmvlog.authority.model.User;
 
 /**
@@ -28,10 +30,11 @@ public interface UserService {
     /**
      * 查询用户信息
      *
-     * @param name 用户名称
+     * @param userPage 分页信息
+     * @param user     用户名称
      * @return 用户的 token
      */
-    User loadUserByUsername(String name);
+    IPage<User> loadUserByUser(Page<User> userPage, User user);
 
     /**
      * 查询用户信息

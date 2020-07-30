@@ -45,11 +45,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (!"/auth/token".equals(httpServletRequest.getRequestURI()) && !"/user/registered".equals(httpServletRequest.getRequestURI())) {
             String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
             if (token == null)
                 throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "缺少验证信息");
+
 //            log.info("校验的 token：{}", token);
 //            String account = jwtUtil.parseToken(token);
 //            log.info("token 解析到的用户账号：{}", account);

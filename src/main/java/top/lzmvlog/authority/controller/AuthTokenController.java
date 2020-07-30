@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
-import top.lzmvlog.authority.service.impl.UserServiceImpl;
+import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.data.Response;
 
 /**
@@ -22,7 +22,7 @@ public class AuthTokenController {
      * 用户业务逻辑层
      */
     @Autowired
-    public UserServiceImpl userService;
+    public UserService userService;
 
     /**
      * 签发 token

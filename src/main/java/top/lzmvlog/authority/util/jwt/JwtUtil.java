@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.util.date.DateUtil;
 
+import java.util.Map;
+
 /**
  * @author ShaoJie
  * @Date 2020年05月12 15:16
@@ -30,16 +32,19 @@ public class JwtUtil {
     /**
      * 创建生成 token
      *
+     * @param account 用户账号
+     * @param claim   用户权限 map
      * @return String 生成的 token
      */
-    public String createToken(String account) {
+    public String createToken(String account, Map<String, Object> claim) {
         log.info("账号：{} 登录成功", account);
         return Jwts.builder()
                 // 设置唯一的 ida
                 .setId(IdUtil.simpleUUID())
                 // 设置主要包含的信息
                 .setSubject(account)
-                .claim("auth", "admin")
+//                .claim("auth", "admin")
+                .setClaims(claim)
                 // 设置过期时间
                 .setExpiration(new DateUtil().getNowDateOneTime())
                 // 设置 token 签发的时间
@@ -61,6 +66,7 @@ public class JwtUtil {
         log.info("claims:{}", claims.toString());
         if (claims.size() == 0)
             throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 信息错误 重新授权");
+
         return claims.getSubject();
     }
 

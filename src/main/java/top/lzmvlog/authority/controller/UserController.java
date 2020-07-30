@@ -2,9 +2,11 @@ package top.lzmvlog.authority.controller;
 
 import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
-import top.lzmvlog.authority.service.impl.UserServiceImpl;
+import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.data.Response;
 
 /**
@@ -20,7 +22,7 @@ public class UserController {
      * 用户的业务逻辑层
      */
     @Autowired
-    public UserServiceImpl userService;
+    public UserService userService;
 
     /**
      * 注册
