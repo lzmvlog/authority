@@ -1,13 +1,17 @@
 package top.lzmvlog.authority.controller;
 
 import cn.hutool.http.HttpStatus;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
+import top.lzmvlog.authority.util.PageUtil;
 import top.lzmvlog.authority.util.data.Response;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ShaoJie
@@ -34,21 +38,33 @@ public class UserController {
     public Response registered(User user) {
         if (user == null)
             throw new RuntimeException("用户不能为空");
+
         userService.insert(user);
         return new Response(HttpStatus.HTTP_OK, "注册成功");
     }
 
     /**
+     * 添加用户
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @PostMapping("save")
+    public Response save(@NotNull User user) {
+        return new Response(HttpStatus.HTTP_OK, userService.insert(user));
+    }
+
+    /**
      * 查询用户信息
      *
-     * @param account 用户的账号
+     * @param user 用户的信息
      * @return
      */
     @PostMapping("/getInfo")
-    public Response getUserInfo(String account) {
-        return new Response(HttpStatus.HTTP_OK, userService.selectUserInfo(account));
+    public Response getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
+        return new Response(HttpStatus.HTTP_OK,
+                userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
     }
-
 
 
 }

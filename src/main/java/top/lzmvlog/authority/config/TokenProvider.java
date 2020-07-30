@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import top.lzmvlog.authority.util.jwt.JwtUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,9 +31,15 @@ public class TokenProvider {
     // 权限密钥
     private static final String AUTHORITIES_KEY = "auth";
 
+    // 用户信息
+    private static final String ID = "id";
+
     // 签名密钥
     @Value("${auth.token.signingKey}")
     private String signingKey;
+
+    @Autowired
+    public JwtUtil jwtUtil;
 
     /**
      * 获取 Spring Context 的 SecurityContext 对象
@@ -41,13 +49,15 @@ public class TokenProvider {
      * @return authentication 认证对象
      */
     public Authentication getAuthentication(String token) {
+
         // parser() 解析token
         Claims claims = Jwts.parser()
                 .setSigningKey(signingKey)
                 .parseClaimsJws(token)
                 .getBody();
         Object claim = claims.get(AUTHORITIES_KEY);
-        log.info("claim:{}", claim);
+
+        // 权限
         String auth = "";
         if (Objects.nonNull(claim)) {
             auth = claim.toString();
@@ -60,7 +70,8 @@ public class TokenProvider {
                         .collect(Collectors.toList());
 
         // 创建 Spring Security 的 user 对象
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User((String) claims.get(ID), "", authorities);
+
         // 创建返回 Authentication 对象
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

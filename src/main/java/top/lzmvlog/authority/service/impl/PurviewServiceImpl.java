@@ -13,6 +13,7 @@ import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.AuthorityService;
 import top.lzmvlog.authority.service.PurviewService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -74,11 +75,20 @@ public class PurviewServiceImpl implements PurviewService {
      */
     @Override
     public Map<String, Object> selectList(String id) {
+        List<Authority> authorities = authorityService.selectList(new Authority().setMemberId(id));
         // 获取 List<String> id
-        List<String> ids = authorityService.selectList(new Authority().setMemberId(id)).stream().map(Authority::getId).collect(Collectors.toList());
+        List<String> ids = authorities.stream().map(Authority::getId).collect(Collectors.toList());
         List<Purview> purviews = purviewMapper.selectBatchIds(ids);
         // 权限 map
-        Map<String, Object> map = purviews.stream().collect(Collectors.toMap(Purview::getAuthority, Purview::getRole, (a, b) -> b));
+//        Map<String, Object> map = purviews.stream().collect(Collectors.toMap(Purview::getAuthority, Purview::getRole, (a, b) -> b));
+        Map<String, Object> map = new HashMap<>();
+        String auth = "";
+        for (Purview purview : purviews) {
+            auth = purview.getRole() + ",";
+        }
+        map.put("auth", auth);
+        map.put("id",id);
+
         return map;
     }
 

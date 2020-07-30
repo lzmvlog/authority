@@ -76,15 +76,15 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String selectUser(User user) {
-        User userInfo = userMapper.selectOne(Wrappers.query(user).eq("name", user.getName()));
+        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(user.getName())));
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误，填写正确的账号密码");
 
         // 获取权限 map
-        Map<String, Object> map = purviewService.selectList(user.getId());
+        Map<String, Object> map = purviewService.selectList(userInfo.getId());
 
-        return jwtUtil.createToken(user.getId(), map);
+        return jwtUtil.createToken(map);
     }
 
     /**
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
      * @throws TokenException 登录失败 / 分发 token 失败
      */
     @Override
-    public IPage<User> loadUserByUser(Page<User> userPage, User user) {
+    public IPage<User> selectUserByUser(Page<User> userPage, User user) {
         IPage<User> users = userMapper.selectPage(userPage, Wrappers.query(user).eq("name", user.getName()));
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (users == null)
@@ -108,16 +108,16 @@ public class UserServiceImpl implements UserService {
     /**
      * 查询用户信息
      *
-     * @param account 用户账号
-     * @return user 用户的基本信息
+     * @param user 用户信息
+     * @return
      */
     @Override
-    public User selectUserInfo(String account) {
-        User user = userMapper.selectOne(Wrappers.query(new User().setName(account)));
-        if (user == null)
+    public User selectUserInfo(User user) {
+        User userInfo = userMapper.selectOne(Wrappers.query(user));
+        if (userInfo == null)
             throw new ServiceException(HttpStatus.HTTP_INTERNAL_ERROR, "当前用户信息不存在");
 
-        return user;
+        return userInfo;
     }
 
     /**

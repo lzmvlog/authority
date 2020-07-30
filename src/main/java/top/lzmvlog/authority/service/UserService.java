@@ -34,15 +34,15 @@ public interface UserService {
      * @param user     用户名称
      * @return 用户的 token
      */
-    IPage<User> loadUserByUser(Page<User> userPage, User user);
+    IPage<User> selectUserByUser(Page<User> userPage, User user);
 
     /**
      * 查询用户信息
      *
-     * @param account 用户账号
+     * @param user 用户信息
      * @return
      */
-    User selectUserInfo(String account);
+    User selectUserInfo(User user);
 
     /**
      * 查询用户信息

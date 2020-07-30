@@ -33,7 +33,8 @@ public class PurviewController {
      */
     @PutMapping("save")
     public Response save(@NotNull Purview purview) {
-        return new Response(HttpStatus.HTTP_OK, purviewService.insert(purview));
+        purviewService.insert(purview);
+        return new Response(HttpStatus.HTTP_OK, "添加成功");
     }
 
     /**
@@ -45,6 +46,8 @@ public class PurviewController {
      */
     @PostMapping("selectList")
     public Response selectList(@NotNull Purview purview, PageUtil pageUtil) {
-        return new Response(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), purview));
+        return new Response(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(),
+                pageUtil.getPageNum()), purview));
     }
+
 }

@@ -32,17 +32,14 @@ public class JwtUtil {
     /**
      * 创建生成 token
      *
-     * @param account 用户账号
      * @param claim   用户权限 map
      * @return String 生成的 token
      */
-    public String createToken(String account, Map<String, Object> claim) {
-        log.info("账号：{} 登录成功", account);
+    public String createToken(Map<String, Object> claim) {
         return Jwts.builder()
                 // 设置唯一的 ida
                 .setId(IdUtil.simpleUUID())
                 // 设置主要包含的信息
-                .setSubject(account)
 //                .claim("auth", "admin")
                 .setClaims(claim)
                 // 设置过期时间

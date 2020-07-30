@@ -58,7 +58,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      */
     @Override
     public List<Authority> selectList(Authority authority) {
-        return authorityMapper.selectList(Wrappers.query(authority).eq("memberId", authority.getMemberId()));
+        return authorityMapper.selectList(Wrappers.query(new Authority().setMemberId(authority.getMemberId())));
     }
 
 }

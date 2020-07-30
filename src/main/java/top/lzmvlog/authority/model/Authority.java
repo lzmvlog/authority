@@ -35,7 +35,7 @@ public class Authority {
     /**
      * 用户id
      */
-    @TableField("memberId")
+    @TableField("member_id")
     private String memberId;
 
 
