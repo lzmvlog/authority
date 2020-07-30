@@ -31,15 +31,16 @@ public class JwtUtil {
 
     /**
      * 创建生成 token
+     * <p>
+     * setClaims() 与 setSubject() 冲突所以不设置主体信息
      *
-     * @param claim   用户权限 map
+     * @param claim 用户权限 map
      * @return String 生成的 token
      */
     public String createToken(Map<String, Object> claim) {
         return Jwts.builder()
                 // 设置唯一的 ida
                 .setId(IdUtil.simpleUUID())
-                // 设置主要包含的信息
 //                .claim("auth", "admin")
                 .setClaims(claim)
                 // 设置过期时间

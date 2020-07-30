@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author ShaoJie
  * @Date 2020年06月17 20:10
- * @Description:
+ * @Description: 构建认证对象
  */
 @Slf4j
 @Component
@@ -39,7 +39,7 @@ public class TokenProvider {
     private String signingKey;
 
     @Autowired
-    public JwtUtil jwtUtil;
+    JwtUtil jwtUtil;
 
     /**
      * 获取 Spring Context 的 SecurityContext 对象
