@@ -16,7 +16,7 @@ import top.lzmvlog.authority.util.data.Response;
 /**
  * @author ShaoJie
  * @Date 2020年07月30 11:43
- * @Description:
+ * @Description: 权限管理
  */
 @RestController
 @RequestMapping("purview")

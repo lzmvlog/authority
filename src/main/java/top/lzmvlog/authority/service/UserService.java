@@ -7,7 +7,7 @@ import top.lzmvlog.authority.model.User;
 /**
  * @author ShaoJie
  * @Date 2020年05月12 10:20
- * @Description:
+ * @Description: 用户接口
  */
 public interface UserService {
 

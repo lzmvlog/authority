@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -16,6 +17,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @TableName(value = "authority")
+@NoArgsConstructor
 public class Authority {
 
     /**
@@ -25,14 +27,16 @@ public class Authority {
     private String id;
 
     /**
+     * 用户的 权限/角色
+     */
+    @TableField("authority")
+    private String authority;
+
+    /**
      * 用户id
      */
     @TableField("memberId")
     private String memberId;
 
-    /**
-     * 用户的 权限/角色
-     */
-    @TableField("roles")
-    private String roles;
+
 }

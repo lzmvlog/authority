@@ -14,10 +14,11 @@ import top.lzmvlog.authority.dao.UserMapper;
 import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.model.User;
+import top.lzmvlog.authority.service.PurviewService;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.jwt.JwtUtil;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ShaoJie
@@ -34,9 +35,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    /**
-     * 用户 接口
-     */
     @Autowired
     UserMapper userMapper;
 
@@ -45,6 +43,12 @@ public class UserServiceImpl implements UserService {
      */
     @Autowired
     public JwtUtil jwtUtil;
+
+    /**
+     * 权限业务逻辑
+     */
+    @Autowired
+    PurviewService purviewService;
 
     /**
      * 插入用户信息
@@ -78,17 +82,16 @@ public class UserServiceImpl implements UserService {
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误，填写正确的账号密码");
 
         // 获取权限 map
+        Map<String, Object> map = purviewService.selectList(user.getId());
 
-
-        return jwtUtil.createToken(user.getName(), new HashMap<>());
+        return jwtUtil.createToken(user.getId(), map);
     }
 
     /**
      * 查询用户信息
      *
-     *
      * @param userPage
-     * @param user 用户名称
+     * @param user     用户名称
      * @return 用户的 token
      * @throws TokenException 登录失败 / 分发 token 失败
      */
@@ -106,7 +109,7 @@ public class UserServiceImpl implements UserService {
      * 查询用户信息
      *
      * @param account 用户账号
-     * @return 用户的基本信息
+     * @return user 用户的基本信息
      */
     @Override
     public User selectUserInfo(String account) {
@@ -121,7 +124,7 @@ public class UserServiceImpl implements UserService {
      * 查询是否存在当前的用户
      *
      * @param account 用户账号
-     * @return 当前的用户是否存在
+     * @return boolean 当前的用户是否存在
      */
     @Override
     public boolean getUser(String account) {

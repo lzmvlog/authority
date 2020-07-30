@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @Accessors(chain = true)
-@TableName(value = "user")
+@TableName(value = "purview")
 @NoArgsConstructor
 public class Purview {
 

@@ -12,6 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import top.lzmvlog.authority.filter.JwtAuthenticationFilter;
 import top.lzmvlog.authority.handler.JwtAccessDeniedHandler;
+import top.lzmvlog.authority.model.Purview;
+import top.lzmvlog.authority.service.PurviewService;
+
+import java.util.List;
 
 /**
  * @author ShaoJie
@@ -50,6 +54,9 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     @Autowired
     public TokenConfiguration tokenConfiguration;
 
+    @Autowired
+    PurviewService purviewService;
+
     /**
      * 构建用户验证的配置
      *
@@ -69,6 +76,10 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        // 添加权限
+        selectPurview(http);
+
         http
                 .authorizeRequests()
                 // 授权地址不需要验证
@@ -91,6 +102,20 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
+    }
+
+    /**
+     * 查询权限并将权限放入 security 中
+     *
+     * @param http
+     * @throws Exception
+     */
+    public void selectPurview(HttpSecurity http) throws Exception {
+        List<Purview> purviews = purviewService.selectList();
+        for (Purview purview : purviews) {
+            http.authorizeRequests()
+                    .antMatchers(purview.getAuthority()).hasAnyAuthority(purview.getRole());
+        }
     }
 
 }
