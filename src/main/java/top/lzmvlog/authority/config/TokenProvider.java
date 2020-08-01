@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
  * @author ShaoJie
  * @Date 2020年06月17 20:10
  * @Description: 构建认证对象
+ * <p>
+ * 添加用户的权限信息
  */
 @Slf4j
 @Component
@@ -63,6 +65,7 @@ public class TokenProvider {
             auth = claim.toString();
         }
 
+        // 权限集合
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(auth.split(","))
                         .filter(StringUtils::isNotBlank)

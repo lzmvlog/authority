@@ -77,17 +77,19 @@ public class PurviewServiceImpl implements PurviewService {
     public Map<String, Object> selectList(String id) {
         List<Authority> authorities = authorityService.selectList(new Authority().setMemberId(id));
         // 获取 List<String> id
-        List<String> ids = authorities.stream().map(Authority::getId).collect(Collectors.toList());
-        List<Purview> purviews = purviewMapper.selectBatchIds(ids);
+        List<String> ids = authorities.stream().map(Authority::getAuthority).collect(Collectors.toList());
         // 权限 map
 //        Map<String, Object> map = purviews.stream().collect(Collectors.toMap(Purview::getAuthority, Purview::getRole, (a, b) -> b));
         Map<String, Object> map = new HashMap<>();
         String auth = "";
-        for (Purview purview : purviews) {
-            auth = purview.getRole() + ",";
+        if (ids.size() != 0) {
+            List<Purview> purviews = purviewMapper.selectBatchIds(ids);
+            for (Purview purview : purviews) {
+                auth = purview.getRole() + ",";
+            }
+            map.put("auth", auth);
         }
-        map.put("auth", auth);
-        map.put("id",id);
+        map.put("id", id);
 
         return map;
     }

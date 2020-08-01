@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public IPage<User> selectUserByUser(Page<User> userPage, User user) {
-        IPage<User> users = userMapper.selectPage(userPage, Wrappers.query(user).eq("name", user.getName()));
+        IPage<User> users = userMapper.selectPage(userPage, Wrappers.query(user));
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (users == null)
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "没有当前账号信息");

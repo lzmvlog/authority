@@ -4,6 +4,7 @@ import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class PurviewController {
      * @param purview 权限对象
      * @return
      */
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("save")
     public Response save(@NotNull Purview purview) {
         purviewService.insert(purview);

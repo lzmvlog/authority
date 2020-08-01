@@ -3,6 +3,7 @@ package top.lzmvlog.authority.controller;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,11 +61,12 @@ public class UserController {
      * @param user 用户的信息
      * @return
      */
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/getInfo")
     public Response getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
         return new Response(HttpStatus.HTTP_OK,
                 userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
     }
-
 
 }
