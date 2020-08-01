@@ -35,14 +35,14 @@ public class UserController {
      * @param user 用户的信息
      * @return
      */
-    @PostMapping("/registered")
-    public Response registered(User user) {
-        if (user == null)
-            throw new RuntimeException("用户不能为空");
-
-        userService.insert(user);
-        return new Response(HttpStatus.HTTP_OK, "注册成功");
-    }
+//    @PostMapping("/registered")
+//    public Response registered(User user) {
+//        if (user == null)
+//            throw new RuntimeException("用户不能为空");
+//
+//        userService.insert(user);
+//        return new Response(HttpStatus.HTTP_OK, "注册成功");
+//    }
 
     /**
      * 添加用户
@@ -50,6 +50,7 @@ public class UserController {
      * @param user 用户信息
      * @return
      */
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("save")
     public Response save(@NotNull User user) {
         return new Response(HttpStatus.HTTP_OK, userService.insert(user));
@@ -61,12 +62,24 @@ public class UserController {
      * @param user 用户的信息
      * @return
      */
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/getInfo")
     public Response getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
         return new Response(HttpStatus.HTTP_OK,
                 userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
+    }
+
+    /**
+     * 查询用户信息
+     *
+     * @param pageUtil 分页信息
+     * @return list 用户信息
+     */
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("/getUser")
+    public Response getUserList(PageUtil pageUtil) {
+        return new Response(HttpStatus.HTTP_OK,
+                userService.selectUserList(new Page<>(pageUtil.getPage(), pageUtil.getPageNum())));
     }
 
 }

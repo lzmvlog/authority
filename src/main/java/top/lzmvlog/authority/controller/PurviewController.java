@@ -32,7 +32,7 @@ public class PurviewController {
      * @param purview 权限对象
      * @return
      */
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("save")
     public Response save(@NotNull Purview purview) {
         purviewService.insert(purview);
@@ -46,6 +46,7 @@ public class PurviewController {
      * @param pageUtil 分页对象
      * @return
      */
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectList")
     public Response selectList(@NotNull Purview purview, PageUtil pageUtil) {
         return new Response(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(),

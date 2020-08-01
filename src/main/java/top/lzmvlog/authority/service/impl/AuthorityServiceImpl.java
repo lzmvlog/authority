@@ -46,7 +46,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      */
     @Override
     public IPage<Authority> selectListByMemberId(Page<Authority> authorityPage, Authority authority) {
-        Page<Authority> memberId = authorityMapper.selectPage(authorityPage, Wrappers.query(authority).eq("memberId", authority.getMemberId()));
+        Page<Authority> memberId = authorityMapper.selectPage(authorityPage, Wrappers.query(authority));
         return memberId;
     }
 
@@ -59,6 +59,17 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public List<Authority> selectList(Authority authority) {
         return authorityMapper.selectList(Wrappers.query(new Authority().setMemberId(authority.getMemberId())));
+    }
+
+    /**
+     * 取消用户的权限
+     *
+     * @param authority 权限对象
+     * @return
+     */
+    @Override
+    public Integer deleteList(Authority authority) {
+        return authorityMapper.delete(Wrappers.query(authority));
     }
 
 }

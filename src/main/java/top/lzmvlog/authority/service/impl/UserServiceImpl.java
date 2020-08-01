@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.lzmvlog.authority.dao.UserMapper;
-import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.PurviewService;
@@ -108,16 +107,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 查询用户信息
      *
-     * @param user 用户信息
-     * @return
+     * @param userPage 分页信息
+     * @return list 用户信息
      */
     @Override
-    public User selectUserInfo(User user) {
-        User userInfo = userMapper.selectOne(Wrappers.query(user));
-        if (userInfo == null)
-            throw new ServiceException(HttpStatus.HTTP_INTERNAL_ERROR, "当前用户信息不存在");
-
-        return userInfo;
+    public IPage selectUserList(Page<User> userPage) {
+        return userMapper.selectPage(userPage,Wrappers.query());
     }
 
     /**

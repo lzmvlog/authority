@@ -87,6 +87,7 @@ public class PurviewServiceImpl implements PurviewService {
             for (Purview purview : purviews) {
                 auth = purview.getRole() + ",";
             }
+            // 权限 String 的信息
             map.put("auth", auth);
         }
         map.put("id", id);

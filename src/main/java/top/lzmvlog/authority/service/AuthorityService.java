@@ -37,4 +37,12 @@ public interface AuthorityService {
      * @return map 权限map
      */
     List<Authority> selectList(Authority authority);
+
+    /**
+     * 取消用户的权限
+     *
+     * @param authority 权限对象
+     * @return
+     */
+    Integer deleteList(Authority authority);
 }

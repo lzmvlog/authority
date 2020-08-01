@@ -39,10 +39,9 @@ public interface UserService {
     /**
      * 查询用户信息
      *
-     * @param user 用户信息
-     * @return
+     * @return list 用户信息
      */
-    User selectUserInfo(User user);
+    IPage<User> selectUserList(Page<User> userPage);
 
     /**
      * 查询用户信息
