@@ -95,4 +95,15 @@ public class PurviewServiceImpl implements PurviewService {
         return map;
     }
 
+    /**
+     * 删除权限
+     *
+     * @param purview 权限对象
+     * @return
+     */
+    @Override
+    public Integer deletePurview(Purview purview) {
+        return purviewMapper.delete(Wrappers.query(purview));
+    }
+
 }

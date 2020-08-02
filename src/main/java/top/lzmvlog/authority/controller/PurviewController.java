@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.PurviewService;
 import top.lzmvlog.authority.util.PageUtil;
-import top.lzmvlog.authority.util.data.Response;
+import top.lzmvlog.authority.util.data.R;
 
 /**
  * @author ShaoJie
@@ -34,9 +34,9 @@ public class PurviewController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("save")
-    public Response save(@NotNull Purview purview) {
+    public R save(@NotNull Purview purview) {
         purviewService.insert(purview);
-        return new Response(HttpStatus.HTTP_OK, "添加成功");
+        return new R(HttpStatus.HTTP_OK, "添加成功");
     }
 
     /**
@@ -48,9 +48,22 @@ public class PurviewController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectList")
-    public Response selectList(@NotNull Purview purview, PageUtil pageUtil) {
-        return new Response(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(),
+    public R selectList(@NotNull Purview purview, PageUtil pageUtil) {
+        return new R(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(),
                 pageUtil.getPageNum()), purview));
+    }
+
+    /**
+     * 删除权限
+     *
+     * @param purview  权限对象
+     * @return
+     */
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("delete")
+    public R deletePurview(@NotNull Purview purview){
+        purviewService.deletePurview(purview);
+        return new R(HttpStatus.HTTP_OK,"删除权限信息成功");
     }
 
 }

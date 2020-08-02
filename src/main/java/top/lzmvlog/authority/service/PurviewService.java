@@ -46,4 +46,11 @@ public interface PurviewService {
      */
     Map<String, Object> selectList(String id);
 
+    /**
+     * 删除权限
+     *
+     * @param purview  权限对象
+     * @return
+     */
+    Integer deletePurview(Purview purview);
 }

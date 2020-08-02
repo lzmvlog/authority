@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Response {
+public class R {
 
     /**
      * 响应码
@@ -36,7 +36,7 @@ public class Response {
      * @param msg  响应信息
      * @param data 响应数据
      */
-    public Response(int code, String msg, Object data) {
+    public R(int code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -48,7 +48,7 @@ public class Response {
      * @param code 响应信息
      * @param msg  响应数据
      */
-    public Response(int code, String msg) {
+    public R(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -59,7 +59,7 @@ public class Response {
      * @param code 响应信息
      * @param data 响应数据
      */
-    public Response(Integer code, Object data) {
+    public R(Integer code, Object data) {
         this.data = data;
     }
 }

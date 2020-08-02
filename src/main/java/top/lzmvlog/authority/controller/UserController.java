@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.util.PageUtil;
-import top.lzmvlog.authority.util.data.Response;
+import top.lzmvlog.authority.util.data.R;
 
 import javax.validation.constraints.NotNull;
 
@@ -52,8 +52,8 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("save")
-    public Response save(@NotNull User user) {
-        return new Response(HttpStatus.HTTP_OK, userService.insert(user));
+    public R save(@NotNull User user) {
+        return new R(HttpStatus.HTTP_OK, userService.insert(user));
     }
 
     /**
@@ -64,8 +64,8 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/getInfo")
-    public Response getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
-        return new Response(HttpStatus.HTTP_OK,
+    public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
+        return new R(HttpStatus.HTTP_OK,
                 userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
     }
 
@@ -77,8 +77,8 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/getUser")
-    public Response getUserList(PageUtil pageUtil) {
-        return new Response(HttpStatus.HTTP_OK,
+    public R getUserList(PageUtil pageUtil) {
+        return new R(HttpStatus.HTTP_OK,
                 userService.selectUserList(new Page<>(pageUtil.getPage(), pageUtil.getPageNum())));
     }
 

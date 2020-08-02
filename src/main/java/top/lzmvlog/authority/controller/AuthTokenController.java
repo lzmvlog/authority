@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
-import top.lzmvlog.authority.util.data.Response;
+import top.lzmvlog.authority.util.data.R;
 
 /**
  * @author ShaoJie
@@ -31,8 +31,8 @@ public class AuthTokenController {
      * @return
      */
     @GetMapping("/token")
-    public Response getToken(User user) {
-        return new Response(HttpStatus.HTTP_OK, "登录成功", userService.selectUser(user));
+    public R getToken(User user) {
+        return new R(HttpStatus.HTTP_OK, "登录成功", userService.selectUser(user));
     }
 
 }

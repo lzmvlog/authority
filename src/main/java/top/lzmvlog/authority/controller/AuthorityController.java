@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import top.lzmvlog.authority.model.Authority;
 import top.lzmvlog.authority.service.AuthorityService;
 import top.lzmvlog.authority.util.PageUtil;
-import top.lzmvlog.authority.util.data.Response;
+import top.lzmvlog.authority.util.data.R;
 
 /**
  * @author ShaoJie
@@ -28,11 +28,11 @@ public class AuthorityController {
      * @param authority 用户权限对象
      * @return
      */
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("save")
-    public Response save(Authority authority) {
+    public R save(Authority authority) {
         authorityService.save(authority);
-        return new Response(HttpStatus.HTTP_OK, "新增成功");
+        return new R(HttpStatus.HTTP_OK, "新增成功");
     }
 
     /**
@@ -44,8 +44,8 @@ public class AuthorityController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("selectList")
-    public Response selectList(Authority authority, PageUtil pageUtil) {
-        return new Response(HttpStatus.HTTP_OK, authorityService.selectListByMemberId(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), authority));
+    public R selectList(Authority authority, PageUtil pageUtil) {
+        return new R(HttpStatus.HTTP_OK, authorityService.selectListByMemberId(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), authority));
     }
 
     /**
@@ -56,9 +56,9 @@ public class AuthorityController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("delete")
-    public Response deleteAuth(Authority authority) {
+    public R deleteAuth(Authority authority) {
         authorityService.deleteList(authority);
-        return new Response(HttpStatus.HTTP_OK, "取消权限成功");
+        return new R(HttpStatus.HTTP_OK, "取消权限成功");
     }
 
 }
