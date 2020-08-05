@@ -76,9 +76,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public String selectUser(User user) {
         User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(user.getName())));
+
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误，填写正确的账号密码");
+
+        if (!userInfo.getEnable())
+            throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "该用户被禁止访问");
 
         // 获取权限 map
         Map<String, Object> map = purviewService.selectList(userInfo.getId());
@@ -112,7 +116,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public IPage selectUserList(Page<User> userPage) {
-        return userMapper.selectPage(userPage,Wrappers.query());
+        return userMapper.selectPage(userPage, Wrappers.query());
     }
 
     /**
@@ -128,6 +132,17 @@ public class UserServiceImpl implements UserService {
             return false;
 
         return true;
+    }
+
+    /**
+     * 禁用用户
+     *
+     * @param user 用户信息
+     */
+    @Override
+    public void disableUser(User user) {
+        user.setEnable(false);
+        userMapper.update(user, Wrappers.update());
     }
 
 }

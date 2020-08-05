@@ -4,6 +4,7 @@ import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class UserController {
      * @param user 用户的信息
      * @return
      */
-//    @PostMapping("/registered")
+//    @PostMapping("registered")
 //    public Response registered(User user) {
 //        if (user == null)
 //            throw new RuntimeException("用户不能为空");
@@ -63,7 +64,7 @@ public class UserController {
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("/getInfo")
+    @PostMapping("getInfo")
     public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
         return new R(HttpStatus.HTTP_OK,
                 userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
@@ -76,10 +77,23 @@ public class UserController {
      * @return list 用户信息
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("/getUser")
+    @PostMapping("getUser")
     public R getUserList(PageUtil pageUtil) {
         return new R(HttpStatus.HTTP_OK,
                 userService.selectUserList(new Page<>(pageUtil.getPage(), pageUtil.getPageNum())));
+    }
+
+    /**
+     * 禁用用户
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("disable")
+    public R disableUser(User user) {
+        userService.disableUser(user);
+        return new R(HttpStatus.HTTP_OK,"禁用成功");
     }
 
 }

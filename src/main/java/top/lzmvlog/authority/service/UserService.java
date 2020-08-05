@@ -32,7 +32,7 @@ public interface UserService {
      *
      * @param userPage 分页信息
      * @param user     用户名称
-     * @return 用户的 token
+     * @return
      */
     IPage<User> selectUserByUser(Page<User> userPage, User user);
 
@@ -50,4 +50,11 @@ public interface UserService {
      * @return
      */
     boolean getUser(String account);
+
+    /**
+     * 禁用用户
+     *
+     * @param user 用户信息
+     */
+    void disableUser(User user);
 }

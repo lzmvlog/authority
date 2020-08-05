@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.model;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -50,7 +49,8 @@ public class User implements Serializable {
      * condition = "%s = true" 是 @TableField 注解的其中一个属性
      * 可以给当前的的查询字段加上一个字段 例如：isEnable = true 的默认条件值
      */
-    @TableField(value = "isEnable", fill = FieldFill.INSERT_UPDATE, update = "true", condition = "%s = true")
-    private boolean enable;
+//    @TableField(value = "isEnable", fill = FieldFill.INSERT_UPDATE, update = "true", condition = "%s = true")
+    @TableField(value = "isEnable")
+    private Boolean enable;
 
 }

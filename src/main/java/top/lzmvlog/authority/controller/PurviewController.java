@@ -35,6 +35,7 @@ public class PurviewController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("save")
     public R save(@NotNull Purview purview) {
+        purview.setRole("ROLE_" + purview.getRole());
         purviewService.insert(purview);
         return new R(HttpStatus.HTTP_OK, "添加成功");
     }

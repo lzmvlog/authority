@@ -24,9 +24,41 @@
         <version>0.11.0</version>
     </dependency>
     
-致力于将本项目做成单系统开箱即用的权限管理系统
+#### 数据库说明
+
+##### 用户表 `USER` 储存用户信息
+    DROP TABLE IF EXISTS `user`;
+    CREATE TABLE `user`  (
+      `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'id',
+      `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '账号',
+      `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
+      `isEnable` bit(1) NULL DEFAULT NULL COMMENT '是否启用1、启用 0、禁用',
+      PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+##### 权限表 `PURVIEW` 储存权限
+    DROP TABLE IF EXISTS `purview`;
+    CREATE TABLE `purview`  (
+      `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '权限id',
+      `authority` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限名称',
+      `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色',
+      PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+    
+##### 用户权限表  `AUTHORITY`  储存用户权限
+    DROP TABLE IF EXISTS `authority`;
+    CREATE TABLE `authority`  (
+      `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户权限id',
+      `authority` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限id',
+      `member_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户id',
+      PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+操作这三个数据库都需要拥有`ADMIN`权限 具体需要什么权限自行添加 如果想取消权限限制 注释 `@PreAuthorize("hasRole('ADMIN')")`
+
+`@PreAuthorize("hasRole('ADMIN')")` 和 `@PreAuthorize("hasAnyRole('ADMIN')")` 具有相同的意思 只是表达方式和实际使用效果不同
+`@PreAuthorize("hasAnyRole('ADMIN')")` 可以设置多个角色 `@PreAuthorize("hasRole('ADMIN')")` 只能设置单个
+
+若想取消接口的访问授权 删除以上注解即可 或者删除 `@EnableGlobalMethodSecurity(prePostEnabled=true)` 取消验证授权
 
 
-    
-  
-    
