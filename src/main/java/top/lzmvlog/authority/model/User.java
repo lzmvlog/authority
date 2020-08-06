@@ -33,8 +33,15 @@ public class User implements Serializable {
      * 用户的名称
      */
     @TableField("name")
-    @NotNull(message = "账号不能为空")
+    @NotNull(message = "用户名称不能为空")
     private String name;
+
+    /**
+     * 用户的账号
+     */
+    @TableField("account")
+    @NotNull(message = "账号不能为空")
+    private String account;
 
     /**
      * 用户密码
@@ -42,6 +49,12 @@ public class User implements Serializable {
     @TableField("password")
     @NotNull(message = "密码不能为空")
     private String password;
+
+    /**
+     * 用户头像
+     */
+    @TableField("avatar")
+    private String avatar;
 
     /**
      * 是否启用账号

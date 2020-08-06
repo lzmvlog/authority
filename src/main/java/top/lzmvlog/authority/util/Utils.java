@@ -11,7 +11,7 @@ public class Utils {
      * 取文件后缀
      *
      * @param resourceName 文件名称
-     * @return
+     * @return String 文件后缀名称
      */
     public static String getSuffix(String resourceName) {
         int index = resourceName.lastIndexOf('.');
@@ -23,7 +23,7 @@ public class Utils {
      * 适用类型判断： String
      *
      * @param charSequence 判断的类型值
-     * @return
+     * @return boolean 字符是否为空
      */
     public static boolean isEmpty(CharSequence charSequence) {
         return charSequence == null || charSequence.length() == 0 || charSequence.toString().trim().length() == 0;

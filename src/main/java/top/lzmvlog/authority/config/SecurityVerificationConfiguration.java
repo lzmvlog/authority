@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
@@ -46,7 +46,7 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     public JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
-     * jwt 验证处理器
+     * 异常处理器
      */
     @Autowired
     public JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -70,7 +70,6 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
 
     @Bean
     @Override
@@ -102,6 +101,7 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
 //                .addFilter(jwtAuthenticationFilter)
                 // 添加后置处理拦截器
                 .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                // 允许配置异常处理
                 .exceptionHandling()
                 // 访问拒绝处理程序
                 .accessDeniedHandler(jwtAccessDeniedHandler)

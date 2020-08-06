@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String selectUser(User user) {
-        User userInfo = userMapper.selectOne(Wrappers.query(new User().setName(user.getName())));
+        User userInfo = userMapper.selectOne(Wrappers.query(new User().setAccount(user.getAccount())));
 
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
         if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))

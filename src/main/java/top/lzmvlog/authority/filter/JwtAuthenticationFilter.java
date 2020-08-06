@@ -44,9 +44,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.tokenProvider = tokenProvider;
     }
 
+    /**
+     * 与{@code doFilter}的合同相同，但保证在单个请求线程中每个请求仅被调用一次。
+     * 有关详细信息，请参见{@link #shouldNotFilterAsyncDispatch（）}。
+     * <p>提供HttpServletRequest和HttpServletResponse参数，而不是默认的ServletRequest和ServletResponse参数。
+     *
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
-        if (!"/auth/token".equals(httpServletRequest.getRequestURI()) && !"/user/registered".equals(httpServletRequest.getRequestURI())) {
+        if (!"/auth/token".equals(httpServletRequest.getRequestURI())) {
             String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
             if (token == null)
                 throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "缺少验证信息");
