@@ -41,7 +41,7 @@ public interface UserService {
      *
      * @return list 用户信息
      */
-    IPage<User> selectUserList(Page<User> userPage);
+    IPage<User> selectUserList(Page userPage);
 
     /**
      * 查询用户信息

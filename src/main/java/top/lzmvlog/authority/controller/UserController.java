@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
-import top.lzmvlog.authority.util.PageUtil;
 import top.lzmvlog.authority.util.data.R;
 
 import javax.validation.constraints.NotNull;
@@ -73,14 +72,14 @@ public class UserController {
     /**
      * 查询用户信息
      *
-     * @param pageUtil 分页信息
+     * @param page 分页信息
      * @return list 用户信息
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("getUser")
-    public R getUserList(PageUtil pageUtil) {
+    public R getUserList(Page page) {
         return new R(HttpStatus.HTTP_OK,
-                userService.selectUserList(new Page<>(pageUtil.getPage(), pageUtil.getPageNum())));
+                userService.selectUserList(page));
     }
 
     /**

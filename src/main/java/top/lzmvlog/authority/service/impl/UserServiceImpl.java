@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
      * @return list 用户信息
      */
     @Override
-    public IPage selectUserList(Page<User> userPage) {
+    public IPage selectUserList(Page userPage) {
         return userMapper.selectPage(userPage, Wrappers.query());
     }
 
