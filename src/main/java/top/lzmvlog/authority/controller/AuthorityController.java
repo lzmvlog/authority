@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.lzmvlog.authority.model.Authority;
 import top.lzmvlog.authority.service.AuthorityService;
-import top.lzmvlog.authority.util.PageUtil;
 import top.lzmvlog.authority.util.data.R;
 
 /**
@@ -39,13 +38,13 @@ public class AuthorityController {
      * 根据用户信息查询用户权限
      *
      * @param authority 权限对象
-     * @param pageUtil  分页信息
+     * @param page  分页信息
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("selectList")
-    public R selectList(Authority authority, PageUtil pageUtil) {
-        return new R(HttpStatus.HTTP_OK, authorityService.selectListByMemberId(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), authority));
+    public R selectList(Authority authority, Page page) {
+        return new R(HttpStatus.HTTP_OK, authorityService.selectListByMemberId(page, authority));
     }
 
     /**

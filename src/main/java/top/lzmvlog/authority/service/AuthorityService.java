@@ -28,7 +28,7 @@ public interface AuthorityService {
      * @param authority     权限对象
      * @return list 用户所拥有的权限信息
      */
-    IPage<Authority> selectListByMemberId(Page<Authority> authorityPage, Authority authority);
+    IPage<Authority> selectListByMemberId(Page authorityPage, Authority authority);
 
     /**
      * 查询用户权限

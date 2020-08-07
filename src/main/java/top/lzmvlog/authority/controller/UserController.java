@@ -65,9 +65,9 @@ public class UserController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("getInfo")
-    public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, PageUtil pageUtil) {
+    public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, Page page) {
         return new R(HttpStatus.HTTP_OK,
-                userService.selectUserByUser(new Page<>(pageUtil.getPage(), pageUtil.getPageNum()), user));
+                userService.selectUserByUser(page, user));
     }
 
     /**
@@ -93,7 +93,18 @@ public class UserController {
     @GetMapping("disable")
     public R disableUser(User user) {
         userService.disableUser(user);
-        return new R(HttpStatus.HTTP_OK,"禁用成功");
+        return new R(HttpStatus.HTTP_OK, "禁用成功");
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param user 用户信息
+     * @return
+     */
+    public R upload(User user) {
+
+        return new R(HttpStatus.HTTP_OK, "上传头像成功");
     }
 
 }

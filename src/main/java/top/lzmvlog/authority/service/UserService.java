@@ -34,7 +34,7 @@ public interface UserService {
      * @param user     用户名称
      * @return
      */
-    IPage<User> selectUserByUser(Page<User> userPage, User user);
+    IPage<User> selectUserByUser(Page userPage, User user);
 
     /**
      * 查询用户信息

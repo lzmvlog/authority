@@ -53,7 +53,7 @@ public class PurviewServiceImpl implements PurviewService {
      * @return 返回分页后的 list
      */
     @Override
-    public IPage<Purview> selectList(Page<Purview> purviewPage, Purview purview) {
+    public IPage<Purview> selectList(Page purviewPage, Purview purview) {
         return purviewMapper.selectPage(purviewPage, Wrappers.query(purview));
     }
 

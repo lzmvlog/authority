@@ -29,7 +29,7 @@ public interface PurviewService {
      * @param purview     权限对象
      * @return 返回分页后的 list
      */
-    IPage<Purview> selectList(Page<Purview> purviewPage, Purview purview);
+    IPage<Purview> selectList(Page purviewPage, Purview purview);
 
     /**
      * 查询权限

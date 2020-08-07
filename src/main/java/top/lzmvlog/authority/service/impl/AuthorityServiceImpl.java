@@ -45,7 +45,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @return list 用户所拥有的权限信息
      */
     @Override
-    public IPage<Authority> selectListByMemberId(Page<Authority> authorityPage, Authority authority) {
+    public IPage<Authority> selectListByMemberId(Page authorityPage, Authority authority) {
         Page<Authority> memberId = authorityMapper.selectPage(authorityPage, Wrappers.query(authority));
         return memberId;
     }

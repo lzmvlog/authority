@@ -5,6 +5,9 @@
    
 #### 软件框架说明
 框架版本说明：
+  
+   Spring Boot 、Spring Security 、Jwt 权限管理系统
+   开箱即用
     
     SpringBoot 2.2.7.RELEASE
     SpringSecurity 2.2.7.RELEASE

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.PurviewService;
-import top.lzmvlog.authority.util.PageUtil;
 import top.lzmvlog.authority.util.data.R;
 
 /**
@@ -44,14 +43,13 @@ public class PurviewController {
      * 查询权限集合
      *
      * @param purview  权限对象
-     * @param pageUtil 分页对象
+     * @param page 分页对象
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectList")
-    public R selectList(@NotNull Purview purview, PageUtil pageUtil) {
-        return new R(HttpStatus.HTTP_OK, purviewService.selectList(new Page<>(pageUtil.getPage(),
-                pageUtil.getPageNum()), purview));
+    public R selectList(@NotNull Purview purview, Page page) {
+        return new R(HttpStatus.HTTP_OK, purviewService.selectList(page, purview));
     }
 
     /**
