@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 06/08/2020 23:30:48
+ Date: 08/08/2020 21:58:32
 */
 
 SET NAMES utf8mb4;
@@ -38,6 +38,19 @@ CREATE TABLE `purview`  (
   `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for resource
+-- ----------------------------
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE `resource`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '文件id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件名称',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件路径',
+  `suffix` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '文件后缀',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '文件上传时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user

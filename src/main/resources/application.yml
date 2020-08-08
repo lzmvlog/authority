@@ -28,3 +28,12 @@ logging:
 auth:
   token:
     signingKey: YXV0aG9yaXR5
+
+qiniuyun:
+  access:
+    key: access-key
+  secret:
+    key: secret-key
+  bucket:
+    name: bucket-name
+  domainName: domainName
