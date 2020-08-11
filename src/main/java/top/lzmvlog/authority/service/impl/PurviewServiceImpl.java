@@ -106,4 +106,14 @@ public class PurviewServiceImpl implements PurviewService {
         return purviewMapper.delete(Wrappers.query(purview));
     }
 
+    /**
+     * 修改权限信息
+     *
+     * @param purview 权限信息
+     */
+    @Override
+    public void updata(Purview purview) {
+        purviewMapper.updateById(purview);
+    }
+
 }

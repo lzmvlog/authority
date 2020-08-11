@@ -15,7 +15,7 @@ public class DateUtil {
      *
      * @return Date 之后的一个小时
      */
-    public Date getNowDateOneTime() {
+    public static Date getNowDateOneTime() {
         Calendar calendar = Calendar.getInstance();
         // HOUR_OF_DAY 指示一天中的小时
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);

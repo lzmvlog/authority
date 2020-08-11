@@ -44,7 +44,7 @@ public class JwtUtil {
 //                .claim("auth", "admin")
                 .setClaims(claim)
                 // 设置过期时间
-                .setExpiration(new DateUtil().getNowDateOneTime())
+                .setExpiration(DateUtil.getNowDateOneTime())
                 // 设置 token 签发的时间
                 .setIssuedAt(new DateTime())
                 // 设置签名 使用HS256算法，并设置SecretKey(字符串)  签名算法和秘钥

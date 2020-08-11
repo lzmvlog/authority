@@ -38,7 +38,7 @@ public class AuthorityController {
      * 根据用户信息查询用户权限
      *
      * @param authority 权限对象
-     * @param page  分页信息
+     * @param page      分页信息
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
@@ -58,6 +58,19 @@ public class AuthorityController {
     public R deleteAuth(Authority authority) {
         authorityService.deleteList(authority);
         return new R(HttpStatus.HTTP_OK, "取消权限成功");
+    }
+
+    /**
+     * 取消用户的权限
+     *
+     * @param authority 权限对象
+     * @return
+     */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("updata")
+    public R updataAuth(Authority authority) {
+        authorityService.updata(authority);
+        return new R(HttpStatus.HTTP_OK, "修改权限成功");
     }
 
 }

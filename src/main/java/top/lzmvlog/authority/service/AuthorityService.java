@@ -45,4 +45,11 @@ public interface AuthorityService {
      * @return
      */
     Integer deleteList(Authority authority);
+
+    /**
+     * 更新权限信息
+     *
+     * @param authority 权限对象
+     */
+    void updata(Authority authority);
 }

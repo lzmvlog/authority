@@ -3,10 +3,7 @@ package top.lzmvlog.authority.controller;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.service.ResourceService;
@@ -69,9 +66,9 @@ public class ResourceController {
      * @param resource 文件信息
      * @return
      */
-    @GetMapping
-    public R update(Resource resource) {
-        resourceService.update(resource);
+    @PostMapping("updata")
+    public R updata(Resource resource) {
+        resourceService.updata(resource);
         return new R(HttpStatus.HTTP_OK, "更新成功");
     }
 

@@ -49,8 +49,15 @@ public interface PurviewService {
     /**
      * 删除权限
      *
-     * @param purview  权限对象
+     * @param purview 权限对象
      * @return
      */
     Integer deletePurview(Purview purview);
+
+    /**
+     * 修改权限信息
+     *
+     * @param purview 权限信息
+     */
+    void updata(Purview purview);
 }

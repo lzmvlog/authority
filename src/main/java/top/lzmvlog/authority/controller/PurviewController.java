@@ -42,8 +42,8 @@ public class PurviewController {
     /**
      * 查询权限集合
      *
-     * @param purview  权限对象
-     * @param page 分页对象
+     * @param purview 权限对象
+     * @param page    分页对象
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -55,14 +55,27 @@ public class PurviewController {
     /**
      * 删除权限
      *
-     * @param purview  权限对象
+     * @param purview 权限对象
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("delete")
-    public R deletePurview(@NotNull Purview purview){
+    public R deletePurview(@NotNull Purview purview) {
         purviewService.deletePurview(purview);
-        return new R(HttpStatus.HTTP_OK,"删除权限信息成功");
+        return new R(HttpStatus.HTTP_OK, "删除权限信息成功");
+    }
+
+    /**
+     * 更新权限
+     *
+     * @param purview 权限对象
+     * @return
+     */
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("updata")
+    public R updatePurview(@NotNull Purview purview) {
+        purviewService.updata(purview);
+        return new R(HttpStatus.HTTP_OK, "更新权限信息成功");
     }
 
 }

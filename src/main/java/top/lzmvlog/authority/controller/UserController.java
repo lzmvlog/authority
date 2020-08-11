@@ -4,12 +4,13 @@ import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import top.lzmvlog.authority.exception.ServiceException;
+import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
+import top.lzmvlog.authority.upload.QiUpload;
 import top.lzmvlog.authority.util.data.R;
 
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,12 @@ public class UserController {
      */
     @Autowired
     public UserService userService;
+
+    /**
+     * 七牛云文件上传
+     */
+    @Autowired
+    QiUpload qiUpload;
 
     /**
      * 注册
@@ -98,12 +105,42 @@ public class UserController {
     /**
      * 上传文件
      *
+     * @param user          用户信息
+     * @param multipartFile 文件信息
+     * @return
+     */
+    @GetMapping("upload")
+    public R upload(User user, @RequestParam("file") MultipartFile multipartFile) {
+        Resource resource = qiUpload.upload(multipartFile);
+        if (resource == null)
+            throw new ServiceException(HttpStatus.HTTP_NOT_FOUND, "头像上传失败");
+
+        userService.updata(user);
+        return new R(HttpStatus.HTTP_OK, "上传头像成功");
+    }
+
+    /**
+     * 修改用户信息
+     *
      * @param user 用户信息
      * @return
      */
-    public R upload(User user) {
+    @PostMapping("updata")
+    public R updata(User user) {
+        userService.updata(user);
+        return new R(HttpStatus.HTTP_OK, "更新信息成功");
+    }
 
-        return new R(HttpStatus.HTTP_OK, "上传头像成功");
+
+    /**
+     * 查询自己的信息
+     *
+     * @param user 用户信息
+     * @return user 用户对象
+     */
+    @GetMapping("selectOneself")
+    public R selectOneself(User user) {
+        return new R(HttpStatus.HTTP_OK, userService.selectUser(user));
     }
 
 }

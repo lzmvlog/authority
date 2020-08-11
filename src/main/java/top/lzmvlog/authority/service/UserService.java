@@ -3,6 +3,7 @@ package top.lzmvlog.authority.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.lzmvlog.authority.model.User;
+import top.lzmvlog.authority.model.vo.TokenVo;
 
 /**
  * @author ShaoJie
@@ -25,7 +26,7 @@ public interface UserService {
      * @param user 用户信息
      * @return
      */
-    String selectUser(User user);
+    TokenVo selectUser(User user);
 
     /**
      * 查询用户信息
@@ -57,4 +58,11 @@ public interface UserService {
      * @param user 用户信息
      */
     void disableUser(User user);
+
+    /**
+     * 修改用户信息
+     *
+     * @param user 用户信息
+     */
+    void updata(User user);
 }

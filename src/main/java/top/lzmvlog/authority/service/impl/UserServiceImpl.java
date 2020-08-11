@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import top.lzmvlog.authority.dao.UserMapper;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.model.User;
+import top.lzmvlog.authority.model.vo.TokenVo;
 import top.lzmvlog.authority.service.PurviewService;
 import top.lzmvlog.authority.service.UserService;
+import top.lzmvlog.authority.util.date.DateUtil;
 import top.lzmvlog.authority.util.jwt.JwtUtil;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -74,7 +77,7 @@ public class UserServiceImpl implements UserService {
      * @throws TokenException 登录失败 / 分发 token 失败
      */
     @Override
-    public String selectUser(User user) {
+    public TokenVo selectUser(User user) {
         User userInfo = userMapper.selectOne(Wrappers.query(new User().setAccount(user.getAccount())));
 
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
@@ -87,7 +90,7 @@ public class UserServiceImpl implements UserService {
         // 获取权限 map
         Map<String, Object> map = purviewService.selectList(userInfo.getId());
 
-        return jwtUtil.createToken(map);
+        return new TokenVo(jwtUtil.createToken(map), userInfo.getName(), DateUtil.getNowDateOneTime(), LocalDateTime.now());
     }
 
     /**
@@ -143,6 +146,16 @@ public class UserServiceImpl implements UserService {
     public void disableUser(User user) {
         user.setEnable(false);
         userMapper.update(user, Wrappers.update());
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param user 用户信息
+     */
+    @Override
+    public void updata(User user) {
+        userMapper.updateById(user);
     }
 
 }

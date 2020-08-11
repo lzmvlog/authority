@@ -72,4 +72,14 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityMapper.delete(Wrappers.query(authority));
     }
 
+    /**
+     * 更新权限信息
+     *
+     * @param authority 权限对象
+     */
+    @Override
+    public void updata(Authority authority) {
+        authorityMapper.updateById(authority);
+    }
+
 }
