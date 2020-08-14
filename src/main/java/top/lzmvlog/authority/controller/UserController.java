@@ -11,9 +11,11 @@ import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.upload.QiUpload;
+import top.lzmvlog.authority.util.SecurityUtil;
 import top.lzmvlog.authority.util.data.R;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author ShaoJie
@@ -141,6 +143,17 @@ public class UserController {
     @GetMapping("selectOneself")
     public R selectOneself(User user) {
         return new R(HttpStatus.HTTP_OK, userService.selectUser(user));
+    }
+
+    @GetMapping("get")
+    public R get(){
+        User user = SecurityUtil.getUser();
+        System.out.println(user);
+        User user1 = SecurityUtil.getUser();
+        System.out.println(user1);
+        List<String> roles = SecurityUtil.getRoles();
+        roles.stream().forEach(x-> System.out.println(x));
+        return new R(HttpStatus.HTTP_OK, "");
     }
 
 }

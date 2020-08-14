@@ -125,16 +125,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 查询是否存在当前的用户
      *
-     * @param account 用户账号
+     * @param id 用户账号
      * @return boolean 当前的用户是否存在
      */
     @Override
-    public boolean getUser(String account) {
-        Integer count = userMapper.selectCount(Wrappers.query(new User().setName(account)));
-        if (count == 0)
-            return false;
-
-        return true;
+    public User getUser(String id) {
+        return userMapper.selectOne(Wrappers.query(new User().setId(id)));
     }
 
     /**

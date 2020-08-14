@@ -50,7 +50,7 @@ public interface UserService {
      * @param account 用户账号
      * @return
      */
-    boolean getUser(String account);
+    User getUser(String account);
 
     /**
      * 禁用用户
