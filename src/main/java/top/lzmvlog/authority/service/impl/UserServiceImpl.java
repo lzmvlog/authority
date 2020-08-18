@@ -90,13 +90,16 @@ public class UserServiceImpl implements UserService {
         // 获取权限 map
         Map<String, Object> map = purviewService.selectList(userInfo.getId());
 
-        return new TokenVo(jwtUtil.createToken(map), userInfo.getName(), DateUtil.getNowDateOneTime(), LocalDateTime.now());
+        // 生成 token
+        String token = jwtUtil.createToken(map);
+
+        return new TokenVo(token, userInfo.getName(), DateUtil.getNowDateOneTime(), LocalDateTime.now());
     }
 
     /**
      * 查询用户信息
      *
-     * @param userPage
+     * @param userPage 分页信息
      * @param user     用户名称
      * @return 用户的 token
      * @throws TokenException 登录失败 / 分发 token 失败

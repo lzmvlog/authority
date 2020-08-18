@@ -11,29 +11,26 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    password:
+#    timeout: 1000
+#    lettuce:
+#      pool:
+#        max-active: 200
+#        max-wait: 1ms
+#        max-idle: 10
+#        min-idle: 0
+
 #mybatis:
 #  mapper-locations: classpath:/mapper/*.mapper
-#  type-aliases-package: top.lzmvlog.authority.model
 
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*.mapper
-  type-aliases-package: top.lzmvlog.authority.model
-
-logging:
-  level:
-    top.lzmvlog.authority.dao: debug
-  file:
-    path: ./log/
-
-auth:
-  token:
-    signingKey: YXV0aG9yaXR5
-
-qiniuyun:
   access:
-    key: access-key
+    key: ktb4l9p_GXJHdadGE4vQy3oRfjJ7VBzihQF7pEZV
   secret:
-    key: secret-key
+    key: QfM3-dEF9h_1SKFxwvtxAtAMUOnfi6pH8uG8QpLx
   bucket:
-    name: bucket-name
-  domainName: domainName
+    name: my-vlog
+  domainName: http://qiniuyun.lzmvlog.top
