@@ -2,12 +2,10 @@ package top.lzmvlog.authority.util;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.experimental.UtilityClass;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import top.lzmvlog.authority.model.User;
-import top.lzmvlog.authority.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,9 +20,6 @@ import java.util.List;
  */
 @UtilityClass
 public class SecurityUtil {
-
-    @Autowired
-    UserService userService;
 
     /**
      * 获取Authentication

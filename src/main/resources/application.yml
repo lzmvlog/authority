@@ -26,6 +26,21 @@ spring:
 
 #mybatis:
 #  mapper-locations: classpath:/mapper/*.mapper
+#  type-aliases-package: top.lzmvlog.authority.model
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.mapper
+  type-aliases-package: top.lzmvlog.authority.model
+
+logging:
+  level:
+    top.lzmvlog.authority.dao: debug
+  file:
+    path: ./log/
+
+auth:
+  token:
+    signingKey: YXV0aG9yaXR5
 
   access:
     key: ktb4l9p_GXJHdadGE4vQy3oRfjJ7VBzihQF7pEZV
