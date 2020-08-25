@@ -11,11 +11,9 @@ import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.upload.QiUpload;
-import top.lzmvlog.authority.util.SecurityUtil;
 import top.lzmvlog.authority.util.data.R;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @author ShaoJie
@@ -45,18 +43,18 @@ public class UserController {
      * @return
      */
 //    @PostMapping("registered")
-//    public Response registered(User user) {
+//    public R registered(User user) {
 //        if (user == null)
 //            throw new RuntimeException("用户不能为空");
 //
 //        userService.insert(user);
-//        return new Response(HttpStatus.HTTP_OK, "注册成功");
+//        return new R(HttpStatus.HTTP_OK, "注册成功");
 //    }
 
     /**
      * 添加用户
      *
-     * @param user 用户信息
+     *@param user 用户信息
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -118,7 +116,7 @@ public class UserController {
         if (resource == null)
             throw new ServiceException(HttpStatus.HTTP_NOT_FOUND, "头像上传失败");
 
-        userService.updata(user);
+        userService.update(user);
         return new R(HttpStatus.HTTP_OK, "上传头像成功");
     }
 
@@ -128,9 +126,9 @@ public class UserController {
      * @param user 用户信息
      * @return
      */
-    @PostMapping("updata")
-    public R updata(User user) {
-        userService.updata(user);
+    @PostMapping("update")
+    public R update(User user) {
+        userService.update(user);
         return new R(HttpStatus.HTTP_OK, "更新信息成功");
     }
 

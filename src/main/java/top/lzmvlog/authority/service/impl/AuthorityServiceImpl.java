@@ -78,7 +78,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @param authority 权限对象
      */
     @Override
-    public void updata(Authority authority) {
+    public void update(Authority authority) {
         authorityMapper.updateById(authority);
     }
 

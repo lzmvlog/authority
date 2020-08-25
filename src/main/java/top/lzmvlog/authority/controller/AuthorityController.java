@@ -67,9 +67,9 @@ public class AuthorityController {
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("updata")
-    public R updataAuth(Authority authority) {
-        authorityService.updata(authority);
+    @PostMapping("update")
+    public R updateAuth(Authority authority) {
+        authorityService.update(authority);
         return new R(HttpStatus.HTTP_OK, "修改权限成功");
     }
 

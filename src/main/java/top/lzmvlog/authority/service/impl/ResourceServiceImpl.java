@@ -61,7 +61,7 @@ public class ResourceServiceImpl implements ResourceService {
      * @return integer
      */
     @Override
-    public Integer updata(Resource resource) {
+    public Integer update(Resource resource) {
         return resourceMapper.update(resource, Wrappers.update());
     }
 }

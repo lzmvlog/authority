@@ -42,6 +42,7 @@ auth:
   token:
     signingKey: YXV0aG9yaXR5
 
+qiniuyun:
   access:
     key: ktb4l9p_GXJHdadGE4vQy3oRfjJ7VBzihQF7pEZV
   secret:

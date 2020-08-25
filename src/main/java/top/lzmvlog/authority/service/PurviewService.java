@@ -59,5 +59,5 @@ public interface PurviewService {
      *
      * @param purview 权限信息
      */
-    void updata(Purview purview);
+    void update(Purview purview);
 }

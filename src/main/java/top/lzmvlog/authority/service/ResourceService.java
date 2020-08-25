@@ -42,6 +42,6 @@ public interface ResourceService {
      * @param resource 文件信息
      * @return integer
      */
-    Integer updata(Resource resource);
+    Integer update(Resource resource);
 
 }

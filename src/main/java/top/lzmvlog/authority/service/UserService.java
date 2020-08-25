@@ -64,5 +64,5 @@ public interface UserService {
      *
      * @param user 用户信息
      */
-    void updata(User user);
+    void update(User user);
 }

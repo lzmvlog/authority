@@ -72,9 +72,9 @@ public class PurviewController {
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("updata")
+    @PostMapping("update")
     public R updatePurview(@NotNull Purview purview) {
-        purviewService.updata(purview);
+        purviewService.update(purview);
         return new R(HttpStatus.HTTP_OK, "更新权限信息成功");
     }
 

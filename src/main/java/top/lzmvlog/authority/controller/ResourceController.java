@@ -66,9 +66,9 @@ public class ResourceController {
      * @param resource 文件信息
      * @return
      */
-    @PostMapping("updata")
-    public R updata(Resource resource) {
-        resourceService.updata(resource);
+    @PostMapping("update")
+    public R update(Resource resource) {
+        resourceService.update(resource);
         return new R(HttpStatus.HTTP_OK, "更新成功");
     }
 

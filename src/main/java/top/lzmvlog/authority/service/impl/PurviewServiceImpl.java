@@ -112,7 +112,7 @@ public class PurviewServiceImpl implements PurviewService {
      * @param purview 权限信息
      */
     @Override
-    public void updata(Purview purview) {
+    public void update(Purview purview) {
         purviewMapper.updateById(purview);
     }
 

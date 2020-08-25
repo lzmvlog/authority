@@ -51,5 +51,5 @@ public interface AuthorityService {
      *
      * @param authority 权限对象
      */
-    void updata(Authority authority);
+    void update(Authority authority);
 }

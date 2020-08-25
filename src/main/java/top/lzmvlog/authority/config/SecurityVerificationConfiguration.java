@@ -93,8 +93,6 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
                 .authorizeRequests()
                 // 授权地址不需要验证
                 .antMatchers("/auth/token").permitAll()
-                // 用户注册地址
-                .antMatchers("/user/registered").permitAll()
                 // 其余的都需要校验
                 .anyRequest().authenticated()
                 .and()
