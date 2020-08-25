@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 08/08/2020 21:58:32
+ Date: 26/08/2020 00:06:56
 */
 
 SET NAMES utf8mb4;
@@ -29,6 +29,11 @@ CREATE TABLE `authority`  (
 ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of authority
+-- ----------------------------
+INSERT INTO `authority` VALUES ('4ff60322b26d433a90c9d3abe7f72c4e', '347aecf61fad46f2b9d8440a846e90a5', 'c20edf9de3a14551ac5ad60f4e02c9f9');
+
+-- ----------------------------
 -- Table structure for purview
 -- ----------------------------
 DROP TABLE IF EXISTS `purview`;
@@ -38,6 +43,11 @@ CREATE TABLE `purview`  (
   `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of purview
+-- ----------------------------
+INSERT INTO `purview` VALUES ('347aecf61fad46f2b9d8440a846e90a5', 'ROLE_ADMIN', 'ROLE_ADMIN');
 
 -- ----------------------------
 -- Table structure for resource
@@ -53,6 +63,10 @@ CREATE TABLE `resource`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of resource
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -65,5 +79,10 @@ CREATE TABLE `user`  (
   `isEnable` bit(1) NULL DEFAULT NULL COMMENT '是否启用1、启用 0、禁用',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('c20edf9de3a14551ac5ad60f4e02c9f9', 'admin', 'admin', '$2a$10$T7COeLhuG/MiQFshDTqfcuyO8jKAXXEM.j0Dp.RtWtxKVg7gEFjiK', NULL, b'1');
 
 SET FOREIGN_KEY_CHECKS = 1;
