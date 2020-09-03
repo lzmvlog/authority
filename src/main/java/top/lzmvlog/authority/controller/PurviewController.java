@@ -2,7 +2,6 @@ package top.lzmvlog.authority.controller;
 
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.PurviewService;
 import top.lzmvlog.authority.util.data.R;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author ShaoJie
