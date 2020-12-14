@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import top.lzmvlog.authority.annotation.Id;
 import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
@@ -54,7 +55,7 @@ public class UserController {
     /**
      * 添加用户
      *
-     *@param user 用户信息
+     * @param user 用户信息
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -132,16 +133,15 @@ public class UserController {
         return new R(HttpStatus.HTTP_OK, "更新信息成功");
     }
 
-
     /**
      * 查询自己的信息
      *
-     * @param user 用户信息
+     * @param id 用户信息
      * @return user 用户对象
      */
     @GetMapping("selectOneself")
-    public R selectOneself(User user) {
-        return new R(HttpStatus.HTTP_OK, userService.selectUser(user));
+    public R selectOneself(@Id String id) {
+        return new R(HttpStatus.HTTP_OK, userService.selectOne(new User().setId(id)));
     }
 
 }

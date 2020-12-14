@@ -58,6 +58,9 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     public TokenConfiguration tokenConfiguration;
 
     @Autowired
+    public WebMvcConfiguration webMvcConfiguration;
+
+    @Autowired
     PurviewService purviewService;
 
     /**
@@ -68,7 +71,6 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean

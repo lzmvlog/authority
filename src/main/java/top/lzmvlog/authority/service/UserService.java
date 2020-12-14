@@ -65,4 +65,12 @@ public interface UserService {
      * @param user 用户信息
      */
     void update(User user);
+
+    /**
+     * 查询用户自己的信息
+     *
+     * @param id
+     * @return
+     */
+    User selectOne(User id);
 }

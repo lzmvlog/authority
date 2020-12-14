@@ -157,4 +157,15 @@ public class UserServiceImpl implements UserService {
         userMapper.updateById(user);
     }
 
+    /**
+     * 查询用户自己的信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public User selectOne(User id) {
+        return userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getId, id));
+    }
+
 }

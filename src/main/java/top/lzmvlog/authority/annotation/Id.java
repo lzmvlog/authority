@@ -9,11 +9,12 @@ import java.lang.annotation.*;
  * <p>
  * 用于获取 Spring Context 上下文中的用户 id -- 未完成
  */
-@Target(ElementType.FIELD)
+//@Target(ElementType.FIELD)
+@Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited()
+//@Inherited()
+@Documented
 public @interface Id {
 
-    String value() default "";
-
+    String value() default "id";
 }
