@@ -18,14 +18,14 @@ import top.lzmvlog.authority.util.SecurityUtil;
 @Aspect
 @Component
 @Slf4j
-public class IdAnnoImpl implements HandlerMethodArgumentResolver {
+public class IdAnnotationImpl implements HandlerMethodArgumentResolver {
+
     /**
-     * Whether the given {@linkplain MethodParameter method parameter} is
-     * supported by this resolver.
+     * 此解析器是否支持给定的{@linkplain MethodParameter 方法参数}。
      *
-     * @param parameter the method parameter to check
-     * @return {@code true} if this resolver supports the supplied parameter;
-     * {@code false} otherwise
+     * @param parameter 要检查的方法参数
+     * @return {@code true} 如果此解析器支持所提供的参数；
+     * {@code false} 否则不支持
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -38,16 +38,16 @@ public class IdAnnoImpl implements HandlerMethodArgumentResolver {
      * {@link org.springframework.web.bind.WebDataBinder}实例的方法
      *
      * @param parameter     要解析的方法参数。此参数必须先前已传递给必须返回{@code true}的
-     *                      {@link HandlerMethodArgumentResolver.supportParameter}
-     * @param mavContainer  the ModelAndViewContainer for the current request 当前请求的ModelAndViewContainer
-     * @param webRequest    the current request
+     *                      {@link #supportsParameter}
+     * @param mavContainer  当前请求的ModelAndViewContainer
+     * @param webRequest    当前请求
      * @param binderFactory a factory for creating {@link org.springframework.web.bind.WebDataBinder} instances
      * @return the resolved argument value, or {@code null} if not resolvable
-     * @throws Exception in case of errors with the preparation of argument values
      */
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+        // 获取用户的唯一 id
         return SecurityUtil.getUser().getUsername();
     }
 }

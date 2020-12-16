@@ -1,5 +1,6 @@
 package top.lzmvlog.authority.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -26,26 +27,18 @@ public class Resource {
     /**
      * 文件id
      */
-    @TableId("id")
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 文件的名称
      */
-    @TableField("name")
     private String name;
 
     /**
      * 文件连接
      */
-    @TableField("url")
     private String url;
-
-//    /**
-//     * 文件的类型
-//     */
-//    @TableField("type")
-//    private String type;
 
     /**
      * 文件后缀

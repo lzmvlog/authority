@@ -23,15 +23,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `authority`;
 CREATE TABLE `authority`  (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户权限id',
-  `authority` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限id',
+  `purview_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限id',
   `member_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户id',
+  `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限名称',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of authority
 -- ----------------------------
-INSERT INTO `authority` VALUES ('4ff60322b26d433a90c9d3abe7f72c4e', '347aecf61fad46f2b9d8440a846e90a5', 'c20edf9de3a14551ac5ad60f4e02c9f9');
+INSERT INTO `authority` VALUES ('4ff60322b26d433a90c9d3abe7f72c4e', '347aecf61fad46f2b9d8440a846e90a5', 'c20edf9de3a14551ac5ad60f4e02c9f9', 'ROLE_ADMIN');
 
 -- ----------------------------
 -- Table structure for purview

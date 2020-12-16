@@ -28,8 +28,8 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("auth")
 public class AuthTokenController {
 
-    @Value("${spring.redis.tokenOut}")
-    private String tokenOut;
+    @Value("${spring.redis.token-timeout}")
+    private String tokenTimeOut;
 
     /**
      * 用户业务逻辑层
@@ -59,8 +59,8 @@ public class AuthTokenController {
             return new R(HttpStatus.HTTP_OK, "登录成功", JSON.parseObject(accessToken, TokenVo.class));
         }
         TokenVo tokenVo = userService.selectUser(use);
-        valueOperations.set(key,
-                tokenVo.toString(), Long.valueOf(tokenOut), TimeUnit.SECONDS);
+
+        valueOperations.set(key, tokenVo.toString(), Long.valueOf(tokenTimeOut), TimeUnit.SECONDS);
         return new R(HttpStatus.HTTP_OK, "登录成功", tokenVo);
     }
 

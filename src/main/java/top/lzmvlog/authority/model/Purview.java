@@ -1,6 +1,6 @@
 package top.lzmvlog.authority.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -25,20 +25,18 @@ public class Purview {
     /**
      * 用户id
      */
-    @TableId("id")
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 用户的名称
      */
-    @TableField("authority")
     @NotNull(message = "权限不能为空")
     private String authority;
 
     /**
-     * 用户密码
+     * 用户角色
      */
-    @TableField("role")
     @NotNull(message = "角色不能为空")
     private String role;
 

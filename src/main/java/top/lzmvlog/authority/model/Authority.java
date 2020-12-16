@@ -1,6 +1,6 @@
 package top.lzmvlog.authority.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -23,20 +23,23 @@ public class Authority {
     /**
      * 权限 id
      */
-    @TableId(value = "id")
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 用户的 权限/角色
      */
-    @TableField("authority")
-    private String authority;
+    private String purviewId;
 
     /**
      * 用户id
      */
-    @TableField("member_id")
     private String memberId;
+
+    /**
+     * 角色名称
+     */
+    private String role;
 
 
 }

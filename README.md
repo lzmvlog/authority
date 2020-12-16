@@ -1,7 +1,7 @@
 # authority
 
 #### 介绍 
-   `authority` 是一个基于权限校验的系统
+   `authority` 是一个基于权限校验的系统 优先后台管理配置 - 单系统
    
 #### 软件框架说明
 框架版本说明：
@@ -30,14 +30,14 @@
 #### 数据库说明
 
 ##### 用户表 `USER` 储存用户信息
-    DROP TABLE IF EXISTS `user`;
-    CREATE TABLE `user`  (
-      `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'id',
-      `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '账号',
-      `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '密码',
-      `isEnable` bit(1) NULL DEFAULT NULL COMMENT '是否启用1、启用 0、禁用',
+    DROP TABLE IF EXISTS `authority`;
+    CREATE TABLE `authority`  (
+      `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户权限id',
+      `purview_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限id',
+      `member_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '用户id',
+      `role` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '权限名称',
       PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+    ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 ##### 权限表 `PURVIEW` 储存权限
     DROP TABLE IF EXISTS `purview`;

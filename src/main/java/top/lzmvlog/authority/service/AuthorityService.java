@@ -28,23 +28,24 @@ public interface AuthorityService {
      * @param authority     权限对象
      * @return list 用户所拥有的权限信息
      */
-    IPage<Authority> selectListByMemberId(Page authorityPage, Authority authority);
+    IPage<Authority> selectPage(Page authorityPage, Authority authority);
 
     /**
      * 查询用户权限
      *
-     * @param authority 权限对象
+     * @param memberId 权限对象
      * @return map 权限map
      */
-    List<Authority> selectList(Authority authority);
+    List<Authority> selectList(String memberId);
 
     /**
      * 取消用户的权限
      *
-     * @param authority 权限对象
+     * @param id       权限id
+     * @param memberId 用户id
      * @return
      */
-    Integer deleteList(Authority authority);
+    Integer deleteAuth(String id, String memberId);
 
     /**
      * 更新权限信息

@@ -33,6 +33,10 @@ public class PurviewServiceImpl implements PurviewService {
     @Autowired
     AuthorityService authorityService;
 
+    private static final String AUTH = "auth";
+
+    private static final String ID = "auth";
+
     /**
      * 保存权限信息
      *
@@ -70,28 +74,24 @@ public class PurviewServiceImpl implements PurviewService {
     /**
      * 查询权限
      *
-     * @param id 用户id
+     * @param memberId 用户id
      * @return map 返回权限 map
      */
     @Override
-    public Map<String, Object> selectList(String id) {
-        List<Authority> authorities = authorityService.selectList(new Authority().setMemberId(id));
+    public Map<String, Object> selectList(String memberId) {
+        List<Authority> authorities = authorityService.selectList(memberId);
         // 获取 List<String> id
-        List<String> ids = authorities.stream().map(Authority::getAuthority).collect(Collectors.toList());
+        List<String> ids = authorities.stream().map(Authority::getPurviewId).collect(Collectors.toList());
         // 权限 map
-//        Map<String, Object> map = purviews.stream().collect(Collectors.toMap(Purview::getAuthority, Purview::getRole, (a, b) -> b));
         Map<String, Object> map = new HashMap<>();
-        String auth = "";
+
         if (ids.size() != 0) {
             List<Purview> purviews = purviewMapper.selectBatchIds(ids);
-            for (Purview purview : purviews) {
-                auth = purview.getRole() + ",";
-            }
+            String auth = purviews.stream().map(Purview::getRole).collect(Collectors.joining(","));
             // 权限 String 的信息
-            map.put("auth", auth);
+            map.put(AUTH, auth);
         }
-        map.put("id", id);
-
+        map.put(ID, memberId);
         return map;
     }
 

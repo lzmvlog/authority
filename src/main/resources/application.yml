@@ -17,7 +17,7 @@ spring:
     port: 6379
     password:
     timeout: 1000
-    tokenOut: 7200
+    token-timeout: 7200
 #    lettuce:
 #      pool:
 #        max-active: 200

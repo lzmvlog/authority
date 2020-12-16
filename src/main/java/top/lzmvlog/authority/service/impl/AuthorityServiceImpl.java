@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import top.lzmvlog.authority.dao.AuthorityMapper;
 import top.lzmvlog.authority.model.Authority;
 import top.lzmvlog.authority.service.AuthorityService;
@@ -40,36 +41,42 @@ public class AuthorityServiceImpl implements AuthorityService {
     /**
      * 查询用户的所有权限
      *
-     * @param authorityPage 分页信息
-     * @param authority     权限对象
+     * @param page      分页信息
+     * @param authority 权限对象
      * @return list 用户所拥有的权限信息
      */
     @Override
-    public IPage<Authority> selectListByMemberId(Page authorityPage, Authority authority) {
-        Page<Authority> memberId = authorityMapper.selectPage(authorityPage, Wrappers.query(authority));
-        return memberId;
+    public IPage<Authority> selectPage(Page page, Authority authority) {
+        Page<Authority> authorityPage = authorityMapper.selectPage(page,
+                Wrappers.<Authority>lambdaQuery()
+                        .eq(StringUtils.isEmpty(authority.getId()), Authority::getId, authority.getId())
+                        .eq(StringUtils.isEmpty(authority.getMemberId()), Authority::getMemberId, authority.getMemberId())
+        );
+        return authorityPage;
     }
 
     /**
      * 查询用户权限
      *
-     * @param authority 权限对象
+     * @param memberId 权限对象
      * @return map 权限map
      */
     @Override
-    public List<Authority> selectList(Authority authority) {
-        return authorityMapper.selectList(Wrappers.query(new Authority().setMemberId(authority.getMemberId())));
+    public List<Authority> selectList(String memberId) {
+        return authorityMapper.selectList(Wrappers.<Authority>lambdaQuery().eq(Authority::getMemberId, memberId));
     }
 
     /**
      * 取消用户的权限
      *
-     * @param authority 权限对象
+     * @param id       权限id
+     * @param memberId 用户id
      * @return
      */
     @Override
-    public Integer deleteList(Authority authority) {
-        return authorityMapper.delete(Wrappers.query(authority));
+    public Integer deleteAuth(String id, String memberId) {
+        return authorityMapper.delete(Wrappers.<Authority>lambdaQuery()
+                .eq(Authority::getId, id).eq(Authority::getMemberId, memberId));
     }
 
     /**

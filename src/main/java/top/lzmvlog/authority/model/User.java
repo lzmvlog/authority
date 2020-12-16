@@ -1,5 +1,6 @@
 package top.lzmvlog.authority.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -7,12 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * @author ShaoJie
@@ -29,34 +27,30 @@ public class User implements Serializable {
     /**
      * 用户id
      */
-    @TableId("id")
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 用户的名称
      */
-    @TableField("name")
     @NotNull(message = "用户名称不能为空")
     private String name;
 
     /**
      * 用户的账号
      */
-    @TableField("account")
     @NotNull(message = "账号不能为空")
     private String account;
 
     /**
      * 用户密码
      */
-    @TableField("password")
     @NotNull(message = "密码不能为空")
     private String password;
 
     /**
      * 用户头像
      */
-    @TableField("avatar")
     private String avatar;
 
     /**

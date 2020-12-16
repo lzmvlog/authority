@@ -29,7 +29,7 @@ public class AuthorityController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("save")
-    public R save(Authority authority) {
+    public R save(@RequestBody Authority authority) {
         authorityService.save(authority);
         return new R(HttpStatus.HTTP_OK, "新增成功");
     }
@@ -42,26 +42,27 @@ public class AuthorityController {
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("selectList")
-    public R selectList(Authority authority, Page page) {
-        return new R(HttpStatus.HTTP_OK, authorityService.selectListByMemberId(page, authority));
+    @GetMapping("selectPage")
+    public R selectPage(Authority authority, Page page) {
+        return new R(HttpStatus.HTTP_OK, authorityService.selectPage(page, authority));
     }
 
     /**
      * 取消用户的权限
      *
-     * @param authority 权限对象
+     * @param id       权限id
+     * @param memberId 用户id
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("delete")
-    public R deleteAuth(Authority authority) {
-        authorityService.deleteList(authority);
+    public R deleteAuth(String id, String memberId) {
+        authorityService.deleteAuth(id, memberId);
         return new R(HttpStatus.HTTP_OK, "取消权限成功");
     }
 
     /**
-     * 取消用户的权限
+     * 更新用户的权限
      *
      * @param authority 权限对象
      * @return
