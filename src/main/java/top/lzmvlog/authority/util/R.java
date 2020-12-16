@@ -1,6 +1,5 @@
-package top.lzmvlog.authority.util.data;
+package top.lzmvlog.authority.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,18 +10,12 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class R {
 
     /**
      * 响应码
      */
     private Integer code;
-
-    /**
-     * 响应信息
-     */
-    private String msg;
 
     /**
      * 响应数据
@@ -33,24 +26,9 @@ public class R {
      * 响应成功应返回 响应码 - 响应信息 - 响应数据
      *
      * @param code 响应码
-     * @param msg  响应信息
-     * @param data 响应数据
      */
-    public R(int code, String msg, Object data) {
+    public R(int code) {
         this.code = code;
-        this.msg = msg;
-        this.data = data;
-    }
-
-    /**
-     * 若返回不成功 则不会返回响应数据
-     *
-     * @param code 响应信息
-     * @param msg  响应数据
-     */
-    public R(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
     }
 
     /**
@@ -60,6 +38,7 @@ public class R {
      * @param data 响应数据
      */
     public R(Integer code, Object data) {
+        this.code = code;
         this.data = data;
     }
 }

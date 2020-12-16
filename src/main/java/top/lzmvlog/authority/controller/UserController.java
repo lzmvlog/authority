@@ -12,7 +12,7 @@ import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.service.UserService;
 import top.lzmvlog.authority.upload.QiUpload;
-import top.lzmvlog.authority.util.data.R;
+import top.lzmvlog.authority.util.R;
 
 import javax.validation.constraints.NotNull;
 

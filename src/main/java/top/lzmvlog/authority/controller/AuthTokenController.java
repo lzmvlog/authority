@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.model.vo.TokenVo;
 import top.lzmvlog.authority.service.UserService;
-import top.lzmvlog.authority.util.data.R;
+import top.lzmvlog.authority.util.R;
 import top.lzmvlog.authority.util.key.RedisKey;
 
 import java.text.MessageFormat;
@@ -56,12 +56,12 @@ public class AuthTokenController {
         String key = MessageFormat.format(RedisKey.ACCESSTOKEN, use.getAccount());
         String accessToken = valueOperations.get(key);
         if (Objects.nonNull(accessToken)) {
-            return new R(HttpStatus.HTTP_OK, "登录成功", JSON.parseObject(accessToken, TokenVo.class));
+            return new R(HttpStatus.HTTP_OK, JSON.parseObject(accessToken, TokenVo.class));
         }
         TokenVo tokenVo = userService.selectUser(use);
 
         valueOperations.set(key, tokenVo.toString(), Long.valueOf(tokenTimeOut), TimeUnit.SECONDS);
-        return new R(HttpStatus.HTTP_OK, "登录成功", tokenVo);
+        return new R(HttpStatus.HTTP_OK, tokenVo);
     }
 
 }

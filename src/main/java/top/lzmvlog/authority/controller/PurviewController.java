@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.PurviewService;
-import top.lzmvlog.authority.util.data.R;
+import top.lzmvlog.authority.util.R;
 
 /**
  * @author ShaoJie

@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.service.ResourceService;
 import top.lzmvlog.authority.upload.QiUpload;
-import top.lzmvlog.authority.util.data.R;
+import top.lzmvlog.authority.util.R;
 
 /**
  * @author ShaoJie
