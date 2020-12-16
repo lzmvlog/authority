@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User selectOne(User id) {
+    public User selectOne(String id) {
         return userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getId, id));
     }
 

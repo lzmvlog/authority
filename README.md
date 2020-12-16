@@ -64,4 +64,14 @@
 
 若想取消接口的访问授权 删除以上注解即可 或者删除 `@EnableGlobalMethodSecurity(prePostEnabled=true)` 取消验证授权
 
+`@Id` 用于获取当前用户登录的id 
+
+例：
+```
+@GetMapping("selectOneself")
+public R selectOneself(@Id String id) {
+    return new R(HttpStatus.HTTP_OK, userService.selectOne(id));
+}
+```
+
 

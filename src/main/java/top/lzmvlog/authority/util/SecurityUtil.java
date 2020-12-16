@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import top.lzmvlog.authority.model.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,10 +34,10 @@ public class SecurityUtil {
      * @param authentication 认证对象
      * @return user 用户信息
      */
-    public User getUser(Authentication authentication) {
+    public UserDetails getUser(Authentication authentication) {
         Object principal = authentication.getPrincipal();
-        if (principal instanceof User) {
-            return (User) principal;
+        if (principal instanceof UserDetails) {
+            return (UserDetails) principal;
         }
         return null;
     }
@@ -45,7 +45,7 @@ public class SecurityUtil {
     /**
      * 获取用户
      */
-    public User getUser() {
+    public UserDetails getUser() {
         Authentication authentication = getAuthentication();
         return getUser(authentication);
     }

@@ -62,15 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (token == null)
                 throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "缺少验证信息");
 
-//            log.info("校验的 token：{}", token);
-//            String account = jwtUtil.parseToken(token);
-//            log.info("token 解析到的用户账号：{}", account);
-//            if (account == null)
-//                throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "不存在当前的用户");
-//            boolean isPresence = userService.getUser(account);
-//            if (!isPresence)
-//                throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 出错");
-
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

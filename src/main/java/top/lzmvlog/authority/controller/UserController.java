@@ -141,7 +141,7 @@ public class UserController {
      */
     @GetMapping("selectOneself")
     public R selectOneself(@Id String id) {
-        return new R(HttpStatus.HTTP_OK, userService.selectOne(new User().setId(id)));
+        return new R(HttpStatus.HTTP_OK, userService.selectOne(id));
     }
 
 }

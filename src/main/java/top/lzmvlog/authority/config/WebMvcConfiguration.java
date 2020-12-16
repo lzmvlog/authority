@@ -1,8 +1,9 @@
 package top.lzmvlog.authority.config;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.lzmvlog.authority.annotation.IdAnnoImpl;
 
 import java.util.List;
@@ -12,8 +13,12 @@ import java.util.List;
  * @Date 2020年12月14日 22:38
  * @Description:
  */
-@Configuration
-public class WebMvcConfiguration extends WebMvcConfigurationSupport {
+//@Configuration
+@Component
+public class WebMvcConfiguration implements WebMvcConfigurer {
+
+    @Autowired
+    IdAnnoImpl idAnno;
 
     /**
      * 添加自定义的拦截器
@@ -22,8 +27,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        super.addArgumentResolvers(argumentResolvers);
-        argumentResolvers.add(new IdAnnoImpl());
+        argumentResolvers.add(idAnno);
     }
 
 }
