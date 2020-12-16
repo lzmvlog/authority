@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,7 +33,6 @@ public class AuthorityServiceImpl implements AuthorityService {
      */
     @Override
     public Integer save(Authority authority) {
-        authority.setId(IdUtil.fastSimpleUUID());
         return authorityMapper.insert(authority);
     }
 

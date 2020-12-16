@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -10,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import top.lzmvlog.authority.dao.UserMapper;
+import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.exception.TokenException;
 import top.lzmvlog.authority.model.User;
 import top.lzmvlog.authority.model.vo.TokenVo;
@@ -21,6 +22,7 @@ import top.lzmvlog.authority.util.jwt.JwtUtil;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author ShaoJie
@@ -62,9 +64,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Integer insert(User user) {
         log.info("user:{}", user.toString());
-        user.setId(IdUtil.fastSimpleUUID())
-                // encode() 对明文密码加密
-                .setPassword(passwordEncoder.encode(user.getPassword()))
+        // encode() 对明文密码加密
+        user.setPassword(passwordEncoder.encode(user.getPassword()))
                 .setEnable(true);
         return userMapper.insert(user);
     }
@@ -81,11 +82,13 @@ public class UserServiceImpl implements UserService {
         User userInfo = userMapper.selectOne(Wrappers.query(new User().setAccount(user.getAccount())));
 
         // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
-        if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword()))
+        if (userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword())) {
             throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "用户信息错误，填写正确的账号密码");
+        }
 
-        if (!userInfo.getEnable())
+        if (!userInfo.getEnable()) {
             throw new TokenException(HttpStatus.HTTP_FORBIDDEN, "该用户被禁止访问");
+        }
 
         // 获取权限 map
         Map<String, Object> map = purviewService.selectList(userInfo.getId());
@@ -102,27 +105,14 @@ public class UserServiceImpl implements UserService {
      * @param userPage 分页信息
      * @param user     用户名称
      * @return 用户的 token
-     * @throws TokenException 登录失败 / 分发 token 失败
      */
     @Override
     public IPage<User> selectUserByUser(Page userPage, User user) {
-        IPage<User> users = userMapper.selectPage(userPage, Wrappers.query(user));
-        // matches(CharSequence rawPassword, String encodedPassword) 第一个参数是当前输入的密码 第二个是数据库中已经加密过的密文
-        if (users == null)
-            throw new TokenException(HttpStatus.HTTP_BAD_REQUEST, "没有当前账号信息");
-
+        IPage<User> users = userMapper.selectPage(userPage, Wrappers.<User>lambdaQuery()
+                .like(StringUtils.isEmpty(user.getName()), User::getName, user.getName())
+                .like(StringUtils.isEmpty(user.getAccount()), User::getAccount, user.getAccount())
+        );
         return users;
-    }
-
-    /**
-     * 查询用户信息
-     *
-     * @param userPage 分页信息
-     * @return list 用户信息
-     */
-    @Override
-    public IPage selectUserList(Page userPage) {
-        return userMapper.selectPage(userPage, Wrappers.query());
     }
 
     /**
@@ -139,10 +129,14 @@ public class UserServiceImpl implements UserService {
     /**
      * 禁用用户
      *
-     * @param user 用户信息
+     * @param userId 用户信息
      */
     @Override
-    public void disableUser(User user) {
+    public void disableUser(String userId) {
+        User user = selectOne(userId);
+        if (Objects.isNull(user)) {
+            throw new ServiceException("不存在当前用户");
+        }
         user.setEnable(false);
         userMapper.update(user, Wrappers.update());
     }

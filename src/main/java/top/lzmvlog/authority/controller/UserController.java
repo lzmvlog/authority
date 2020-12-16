@@ -74,33 +74,19 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("getInfo")
     public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, Page page) {
-        return new R(HttpStatus.HTTP_OK,
-                userService.selectUserByUser(page, user));
-    }
-
-    /**
-     * 查询用户信息
-     *
-     * @param page 分页信息
-     * @return list 用户信息
-     */
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("getUser")
-    public R getUserList(Page page) {
-        return new R(HttpStatus.HTTP_OK,
-                userService.selectUserList(page));
+        return new R(HttpStatus.HTTP_OK, userService.selectUserByUser(page, user));
     }
 
     /**
      * 禁用用户
      *
-     * @param user 用户信息
+     * @param userId 用户信息
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("disable")
-    public R disableUser(User user) {
-        userService.disableUser(user);
+    public R disableUser(String userId) {
+        userService.disableUser(userId);
         return new R(HttpStatus.HTTP_OK, "禁用成功");
     }
 

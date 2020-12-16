@@ -1,12 +1,12 @@
 package top.lzmvlog.authority.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import top.lzmvlog.authority.dao.PurviewMapper;
 import top.lzmvlog.authority.model.Authority;
 import top.lzmvlog.authority.model.Purview;
@@ -35,7 +35,7 @@ public class PurviewServiceImpl implements PurviewService {
 
     private static final String AUTH = "auth";
 
-    private static final String ID = "auth";
+    private static final String ID = "id";
 
     /**
      * 保存权限信息
@@ -45,7 +45,6 @@ public class PurviewServiceImpl implements PurviewService {
      */
     @Override
     public Integer insert(Purview purview) {
-        purview.setId(IdUtil.fastSimpleUUID());
         return purviewMapper.insert(purview);
     }
 
@@ -58,7 +57,11 @@ public class PurviewServiceImpl implements PurviewService {
      */
     @Override
     public IPage<Purview> selectList(Page purviewPage, Purview purview) {
-        return purviewMapper.selectPage(purviewPage, Wrappers.query(purview));
+        return purviewMapper.selectPage(purviewPage, Wrappers.<Purview>lambdaQuery()
+                .eq(StringUtils.isEmpty(purview.getId()), Purview::getId, purview.getId())
+                .like(StringUtils.isEmpty(purview.getRole()), Purview::getRole, purview.getRole())
+
+        );
     }
 
     /**
@@ -98,12 +101,12 @@ public class PurviewServiceImpl implements PurviewService {
     /**
      * 删除权限
      *
-     * @param purview 权限对象
+     * @param purviewId 权限对象
      * @return
      */
     @Override
-    public Integer deletePurview(Purview purview) {
-        return purviewMapper.delete(Wrappers.query(purview));
+    public Integer deletePurview(String purviewId) {
+        return purviewMapper.delete(Wrappers.<Purview>lambdaQuery().eq(Purview::getId, purviewId));
     }
 
     /**

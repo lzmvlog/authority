@@ -42,7 +42,7 @@ public class AuthorityController {
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("selectPage")
+    @PostMapping("selectPage")
     public R selectPage(Authority authority, Page page) {
         return new R(HttpStatus.HTTP_OK, authorityService.selectPage(page, authority));
     }
@@ -55,7 +55,7 @@ public class AuthorityController {
      * @return
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("delete")
+    @GetMapping("delete")
     public R deleteAuth(String id, String memberId) {
         authorityService.deleteAuth(id, memberId);
         return new R(HttpStatus.HTTP_OK, "取消权限成功");
@@ -69,7 +69,7 @@ public class AuthorityController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("update")
-    public R updateAuth(Authority authority) {
+    public R updateAuth(@RequestBody Authority authority) {
         authorityService.update(authority);
         return new R(HttpStatus.HTTP_OK, "修改权限成功");
     }

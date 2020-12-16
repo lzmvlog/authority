@@ -23,4 +23,8 @@ public class ServiceException extends RuntimeException {
      * 异常信息
      */
     private String message;
+
+    public ServiceException(String message) {
+        this.message = message;
+    }
 }

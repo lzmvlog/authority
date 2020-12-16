@@ -4,15 +4,10 @@ import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.lzmvlog.authority.model.Purview;
 import top.lzmvlog.authority.service.PurviewService;
 import top.lzmvlog.authority.util.data.R;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * @author ShaoJie
@@ -34,7 +29,7 @@ public class PurviewController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("save")
-    public R save(@NotNull Purview purview) {
+    public R save(@RequestBody Purview purview) {
         purview.setRole("ROLE_" + purview.getRole());
         purviewService.insert(purview);
         return new R(HttpStatus.HTTP_OK, "添加成功");
@@ -49,20 +44,20 @@ public class PurviewController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectList")
-    public R selectList(@NotNull Purview purview, Page page) {
+    public R selectList(Purview purview, Page page) {
         return new R(HttpStatus.HTTP_OK, purviewService.selectList(page, purview));
     }
 
     /**
      * 删除权限
      *
-     * @param purview 权限对象
+     * @param id 权限对象id
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("delete")
-    public R deletePurview(@NotNull Purview purview) {
-        purviewService.deletePurview(purview);
+    @GetMapping("delete")
+    public R deletePurview(String id) {
+        purviewService.deletePurview(id);
         return new R(HttpStatus.HTTP_OK, "删除权限信息成功");
     }
 
@@ -74,7 +69,7 @@ public class PurviewController {
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("update")
-    public R updatePurview(@NotNull Purview purview) {
+    public R updatePurview(@RequestBody Purview purview) {
         purviewService.update(purview);
         return new R(HttpStatus.HTTP_OK, "更新权限信息成功");
     }

@@ -49,10 +49,10 @@ public interface PurviewService {
     /**
      * 删除权限
      *
-     * @param purview 权限对象
+     * @param purviewId 权限对象id
      * @return
      */
-    Integer deletePurview(Purview purview);
+    Integer deletePurview(String purviewId);
 
     /**
      * 修改权限信息

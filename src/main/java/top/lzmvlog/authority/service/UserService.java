@@ -40,13 +40,6 @@ public interface UserService {
     /**
      * 查询用户信息
      *
-     * @return list 用户信息
-     */
-    IPage<User> selectUserList(Page userPage);
-
-    /**
-     * 查询用户信息
-     *
      * @param account 用户账号
      * @return
      */
@@ -55,9 +48,9 @@ public interface UserService {
     /**
      * 禁用用户
      *
-     * @param user 用户信息
+     * @param userId 用户信息
      */
-    void disableUser(User user);
+    void disableUser(String userId);
 
     /**
      * 修改用户信息
