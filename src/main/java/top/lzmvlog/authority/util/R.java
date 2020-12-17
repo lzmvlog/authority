@@ -1,5 +1,6 @@
 package top.lzmvlog.authority.util;
 
+import cn.hutool.http.HttpStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class R {
+public class R<T> {
 
     /**
      * 响应码
@@ -41,4 +42,13 @@ public class R {
         this.code = code;
         this.data = data;
     }
+
+    public static R ok() {
+        return new R(HttpStatus.HTTP_OK);
+    }
+
+    public static R ok(Object data) {
+        return new R(HttpStatus.HTTP_OK, data);
+    }
+
 }

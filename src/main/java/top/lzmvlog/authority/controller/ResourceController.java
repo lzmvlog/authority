@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.controller;
 
-import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class ResourceController {
      */
     @GetMapping("save")
     public R save(@RequestParam("file") MultipartFile multipartFile) {
-        return new R(HttpStatus.HTTP_OK, qiUpload.upload(multipartFile));
+        return R.ok(qiUpload.upload(multipartFile));
     }
 
     /**
@@ -45,7 +44,7 @@ public class ResourceController {
      */
     @GetMapping("selectList")
     public R selectList(Page page, Resource resource) {
-        return new R(HttpStatus.HTTP_OK, resourceService.selectList(page, resource));
+        return R.ok(resourceService.selectList(page, resource));
     }
 
     /**
@@ -57,7 +56,7 @@ public class ResourceController {
     @GetMapping("delete")
     public R delete(Resource resource) {
         resourceService.delete(resource);
-        return new R(HttpStatus.HTTP_OK, "删除成功");
+        return R.ok();
     }
 
     /**
@@ -69,7 +68,7 @@ public class ResourceController {
     @PostMapping("update")
     public R update(Resource resource) {
         resourceService.update(resource);
-        return new R(HttpStatus.HTTP_OK, "更新成功");
+        return R.ok();
     }
 
 }

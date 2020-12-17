@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.controller;
 
-import cn.hutool.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
@@ -38,7 +37,7 @@ public class MenuController {
         } else {
             menuService.update(menu);
         }
-        return new R(HttpStatus.HTTP_OK);
+        return R.ok();
     }
 
     /**
@@ -50,7 +49,7 @@ public class MenuController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("selectList")
     public R selectList(Menu menu) {
-        return new R(HttpStatus.HTTP_OK, menuService.selectList(menu));
+        return R.ok(menuService.selectList(menu));
     }
 
     /**
@@ -63,8 +62,7 @@ public class MenuController {
     @PostMapping("delete")
     public R delete(String id) {
         menuService.delete(id);
-        return new R(HttpStatus.HTTP_OK);
+        return R.ok();
     }
-
 
 }

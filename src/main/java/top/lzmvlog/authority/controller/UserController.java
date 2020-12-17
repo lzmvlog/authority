@@ -49,7 +49,7 @@ public class UserController {
 //            throw new RuntimeException("用户不能为空");
 //
 //        userService.insert(user);
-//        return new R(HttpStatus.HTTP_OK, "注册成功");
+//        return R.ok();
 //    }
 
     /**
@@ -62,7 +62,7 @@ public class UserController {
     @PostMapping("save")
     public R save(@NotNull User user) {
         userService.insert(user);
-        return new R(HttpStatus.HTTP_OK, "保存用户成功");
+        return R.ok();
     }
 
     /**
@@ -74,7 +74,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectPage")
     public R selectPage(@NotNull(message = "用户信息不能为空") User user, Page page) {
-        return new R(HttpStatus.HTTP_OK, userService.selectPage(page, user));
+        return R.ok(userService.selectPage(page, user));
     }
 
     /**
@@ -87,7 +87,7 @@ public class UserController {
     @GetMapping("disable")
     public R disableUser(String userId) {
         userService.disableUser(userId);
-        return new R(HttpStatus.HTTP_OK, "禁用成功");
+        return R.ok();
     }
 
     /**
@@ -104,7 +104,7 @@ public class UserController {
             throw new ServiceException(HttpStatus.HTTP_NOT_FOUND, "头像上传失败");
 
         userService.update(user);
-        return new R(HttpStatus.HTTP_OK, "上传头像成功");
+        return R.ok();
     }
 
     /**
@@ -116,7 +116,7 @@ public class UserController {
     @PostMapping("update")
     public R update(User user) {
         userService.update(user);
-        return new R(HttpStatus.HTTP_OK, "更新信息成功");
+        return R.ok();
     }
 
     /**
@@ -127,7 +127,7 @@ public class UserController {
      */
     @GetMapping("selectOneself")
     public R selectOneself(@Id String id) {
-        return new R(HttpStatus.HTTP_OK, userService.selectOne(id));
+        return R.ok(userService.selectOne(id));
     }
 
 }

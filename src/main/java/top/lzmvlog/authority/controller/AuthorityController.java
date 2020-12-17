@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.controller;
 
-import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +30,7 @@ public class AuthorityController {
     @PutMapping("save")
     public R save(@RequestBody Authority authority) {
         authorityService.save(authority);
-        return new R(HttpStatus.HTTP_OK, "新增成功");
+        return R.ok();
     }
 
     /**
@@ -44,7 +43,7 @@ public class AuthorityController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("selectPage")
     public R selectPage(Authority authority, Page page) {
-        return new R(HttpStatus.HTTP_OK, authorityService.selectPage(page, authority));
+        return R.ok(authorityService.selectPage(page, authority));
     }
 
     /**
@@ -58,7 +57,7 @@ public class AuthorityController {
     @GetMapping("delete")
     public R deleteAuth(String id, String memberId) {
         authorityService.deleteAuth(id, memberId);
-        return new R(HttpStatus.HTTP_OK, "取消权限成功");
+        return R.ok();
     }
 
     /**
@@ -71,7 +70,7 @@ public class AuthorityController {
     @PostMapping("update")
     public R updateAuth(@RequestBody Authority authority) {
         authorityService.update(authority);
-        return new R(HttpStatus.HTTP_OK, "修改权限成功");
+        return R.ok();
     }
 
 }

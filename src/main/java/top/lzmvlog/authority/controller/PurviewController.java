@@ -1,6 +1,5 @@
 package top.lzmvlog.authority.controller;
 
-import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +31,7 @@ public class PurviewController {
     public R save(@RequestBody Purview purview) {
         purview.setRole("ROLE_" + purview.getRole());
         purviewService.insert(purview);
-        return new R(HttpStatus.HTTP_OK, "添加成功");
+        return R.ok();
     }
 
     /**
@@ -45,7 +44,7 @@ public class PurviewController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("selectPage")
     public R selectPage(Purview purview, Page page) {
-        return new R(HttpStatus.HTTP_OK, purviewService.selectPage(page, purview));
+        return R.ok(purviewService.selectPage(page, purview));
     }
 
     /**
@@ -58,7 +57,7 @@ public class PurviewController {
     @GetMapping("delete")
     public R deletePurview(String id) {
         purviewService.deletePurview(id);
-        return new R(HttpStatus.HTTP_OK, "删除权限信息成功");
+        return R.ok();
     }
 
     /**
@@ -71,7 +70,7 @@ public class PurviewController {
     @PostMapping("update")
     public R updatePurview(@RequestBody Purview purview) {
         purviewService.update(purview);
-        return new R(HttpStatus.HTTP_OK, "更新权限信息成功");
+        return R.ok();
     }
 
 }
