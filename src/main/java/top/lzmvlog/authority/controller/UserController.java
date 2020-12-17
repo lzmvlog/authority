@@ -72,9 +72,9 @@ public class UserController {
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("getInfo")
-    public R getUserInfo(@NotNull(message = "用户信息不能为空") User user, Page page) {
-        return new R(HttpStatus.HTTP_OK, userService.selectUserByUser(page, user));
+    @PostMapping("selectPage")
+    public R selectPage(@NotNull(message = "用户信息不能为空") User user, Page page) {
+        return new R(HttpStatus.HTTP_OK, userService.selectPage(page, user));
     }
 
     /**

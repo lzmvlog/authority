@@ -56,10 +56,10 @@ public class PurviewServiceImpl implements PurviewService {
      * @return 返回分页后的 list
      */
     @Override
-    public IPage<Purview> selectList(Page purviewPage, Purview purview) {
+    public IPage<Purview> selectPage(Page purviewPage, Purview purview) {
         return purviewMapper.selectPage(purviewPage, Wrappers.<Purview>lambdaQuery()
-                .eq(StringUtils.isEmpty(purview.getId()), Purview::getId, purview.getId())
-                .like(StringUtils.isEmpty(purview.getRole()), Purview::getRole, purview.getRole())
+                .eq(!StringUtils.isEmpty(purview.getId()), Purview::getId, purview.getId())
+                .like(!StringUtils.isEmpty(purview.getRole()), Purview::getRole, purview.getRole())
 
         );
     }

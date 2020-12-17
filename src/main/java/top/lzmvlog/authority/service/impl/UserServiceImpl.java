@@ -107,10 +107,10 @@ public class UserServiceImpl implements UserService {
      * @return 用户的 token
      */
     @Override
-    public IPage<User> selectUserByUser(Page userPage, User user) {
+    public IPage<User> selectPage(Page userPage, User user) {
         IPage<User> users = userMapper.selectPage(userPage, Wrappers.<User>lambdaQuery()
-                .like(StringUtils.isEmpty(user.getName()), User::getName, user.getName())
-                .like(StringUtils.isEmpty(user.getAccount()), User::getAccount, user.getAccount())
+                .like(!StringUtils.isEmpty(user.getName()), User::getName, user.getName())
+                .like(!StringUtils.isEmpty(user.getAccount()), User::getAccount, user.getAccount())
         );
         return users;
     }

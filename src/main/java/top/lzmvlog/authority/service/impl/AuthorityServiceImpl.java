@@ -47,8 +47,8 @@ public class AuthorityServiceImpl implements AuthorityService {
     public IPage<Authority> selectPage(Page page, Authority authority) {
         Page<Authority> authorityPage = authorityMapper.selectPage(page,
                 Wrappers.<Authority>lambdaQuery()
-                        .eq(StringUtils.isEmpty(authority.getId()), Authority::getId, authority.getId())
-                        .eq(StringUtils.isEmpty(authority.getMemberId()), Authority::getMemberId, authority.getMemberId())
+                        .eq(!StringUtils.isEmpty(authority.getId()), Authority::getId, authority.getId())
+                        .eq(!StringUtils.isEmpty(authority.getMemberId()), Authority::getMemberId, authority.getMemberId())
         );
         return authorityPage;
     }

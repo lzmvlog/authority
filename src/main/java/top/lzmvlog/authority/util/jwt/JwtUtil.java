@@ -41,7 +41,6 @@ public class JwtUtil {
         return Jwts.builder()
                 // 设置唯一的 ida
                 .setId(IdUtil.simpleUUID())
-//                .claim("auth", "admin")
                 .setClaims(claim)
                 // 设置过期时间
                 .setExpiration(DateUtil.getNowDateOneTime())
@@ -62,8 +61,9 @@ public class JwtUtil {
     public String parseToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody();
         log.info("claims:{}", claims.toString());
-        if (claims.size() == 0)
+        if (claims.size() == 0){
             throw new TokenException(HttpStatus.HTTP_INTERNAL_ERROR, "token 信息错误 重新授权");
+        }
 
         return claims.getSubject();
     }

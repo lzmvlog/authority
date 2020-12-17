@@ -43,9 +43,9 @@ public class PurviewController {
      * @return
      */
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("selectList")
-    public R selectList(Purview purview, Page page) {
-        return new R(HttpStatus.HTTP_OK, purviewService.selectList(page, purview));
+    @PostMapping("selectPage")
+    public R selectPage(Purview purview, Page page) {
+        return new R(HttpStatus.HTTP_OK, purviewService.selectPage(page, purview));
     }
 
     /**

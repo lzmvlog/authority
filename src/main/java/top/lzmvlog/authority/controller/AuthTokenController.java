@@ -51,7 +51,6 @@ public class AuthTokenController {
      */
     @PostMapping("/token")
     public R getToken(User use) {
-        // 将获取的 token 存放在 redis 中
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         String key = MessageFormat.format(RedisKey.ACCESSTOKEN, use.getAccount());
         String accessToken = valueOperations.get(key);
@@ -59,7 +58,8 @@ public class AuthTokenController {
             return new R(HttpStatus.HTTP_OK, JSON.parseObject(accessToken, TokenVo.class));
         }
         TokenVo tokenVo = userService.selectUser(use);
-
+        
+        // 将获取的 token 存放在 redis 中
         valueOperations.set(key, tokenVo.toString(), Long.valueOf(tokenTimeOut), TimeUnit.SECONDS);
         return new R(HttpStatus.HTTP_OK, tokenVo);
     }
