@@ -9,8 +9,9 @@ import java.lang.annotation.*;
  * <p>
  * 用于获取 Spring Context 上下文中的用户 id - 不适用后台管理 可使用门户安全校验
  */
+@Inherited
+@Documented
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-@Documented
 public @interface Id {
 }
