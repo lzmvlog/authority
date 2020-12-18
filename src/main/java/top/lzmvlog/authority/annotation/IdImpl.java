@@ -1,7 +1,6 @@
 package top.lzmvlog.authority.annotation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -15,10 +14,9 @@ import top.lzmvlog.authority.util.SecurityUtil;
  * @Date 2020年08月10 10:10
  * @Description:
  */
-@Aspect
 @Component
 @Slf4j
-public class IdAnnotationImpl implements HandlerMethodArgumentResolver {
+public class IdImpl implements HandlerMethodArgumentResolver {
 
     /**
      * 此解析器是否支持给定的{@linkplain MethodParameter 方法参数}。

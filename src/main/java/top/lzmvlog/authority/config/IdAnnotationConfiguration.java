@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import top.lzmvlog.authority.annotation.IdAnnotationImpl;
+import top.lzmvlog.authority.annotation.IdImpl;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * @Description:
  */
 @Component
-public class WebMvcConfiguration implements WebMvcConfigurer {
+public class IdAnnotationConfiguration implements WebMvcConfigurer {
 
     @Autowired
-    IdAnnotationImpl idAnnotation;
+    public IdImpl id;
 
     /**
      * 添加自定义的拦截器
@@ -26,7 +26,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(idAnnotation);
+        argumentResolvers.add(id);
     }
 
 }

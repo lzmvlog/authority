@@ -58,7 +58,7 @@ public class SecurityVerificationConfiguration extends WebSecurityConfigurerAdap
     public TokenConfiguration tokenConfiguration;
 
     @Autowired
-    public WebMvcConfiguration webMvcConfiguration;
+    public IdAnnotationConfiguration idAnnotationConfiguration;
 
     @Autowired
     PurviewService purviewService;

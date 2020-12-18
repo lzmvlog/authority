@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.lzmvlog.authority.annotation.Id;
+import top.lzmvlog.authority.annotation.Limit;
 import top.lzmvlog.authority.exception.ServiceException;
 import top.lzmvlog.authority.model.Resource;
 import top.lzmvlog.authority.model.User;
@@ -125,6 +126,7 @@ public class UserController {
      * @param id 用户信息
      * @return user 用户对象
      */
+    @Limit(limitNum = 2, name = "selectOneself")
     @GetMapping("selectOneself")
     public R selectOneself(@Id String id) {
         return R.ok(userService.selectOne(id));
